@@ -1,0 +1,148 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Wishgranter Rest API",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "https://api.server.test/v1"
+        }
+    ],
+    "components": {
+        "parameters": {
+            "userId": {
+                "name": "user-id",
+                "description": "The user's unique id.",
+                "in": "path",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true,
+                "example": "johnny-silverhand"
+            },
+            "itemsPerPage": {
+                "name": "itemsPerPage",
+                "description": "The maximum number of items to present per page.",
+                "in": "query",
+                "schema": {
+                    "type": "integer"
+                },
+                "required": false,
+                "example": 20
+            },
+            "page": {
+                "name": "page",
+                "description": "The page we are aiming for",
+                "in": "query",
+                "schema": {
+                    "type": "integer"
+                },
+                "example": 1
+            }
+        },
+        "schemas": {
+            "playlist": {
+                "type": "object",
+                "description": "Describes a playlist object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The playlist id",
+                        "example": "samurais-best"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "The human-readable title.",
+                        "example": "Samurai's best"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "The human-readable description.",
+                        "example": "Samurai's all time best tracks."
+                    }
+                }
+            },
+            "page": {
+                "type": "object",
+                "description": "Describes a set of item within a set, a page.",
+                "properties": {
+                    "meta": {
+                        "description": "Meta data about the pagination.",
+                        "type": "object",
+                        "properties": {
+                            "total": {
+                                "type": "integer",
+                                "description": "The total number of items to be listed.",
+                                "example": 100
+                            },
+                            "itemsPerPage": {
+                                "type": "integer",
+                                "description": "Maximum number of item a page must contain.",
+                                "example": 10
+                            },
+                            "pages": {
+                                "type": "integer",
+                                "description": "How many pages there are.",
+                                "example": 10
+                            },
+                            "page": {
+                                "type": "integer",
+                                "description": "The current page.",
+                                "example": 1
+                            },
+                            "count": {
+                                "type": "integer",
+                                "description": "Number of items within this set, this page. Naturally equal or less than itemsPerPage",
+                                "example": 10
+                            }
+                        }
+                    },
+                    "data": {
+                        "description": "The actual list of items.",
+                        "type": "array"
+                    }
+                }
+            }
+        }
+    },
+    "paths": {
+        "/user/{user-id}/collection/playlists": {
+            "get": {
+                "description": "Return a list of playlists belonging to the specified user.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/itemsPerPage"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/page",
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/playlist"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -7,7 +7,7 @@ The end points that need to be documentated:
 - [X] /api/v1/user/{user-id}/collection/playlists/{playlist-id} (GET) get individual playlist
 - [ ] /api/v1/user/{user-id}/collection/playlists/{playlist-id} (GET) download
 - [X] /api/v1/user/{user-id}/collection/playlists/{playlist-id} (PUT) Update existing playlist
-- [ ] /api/v1/user/{user-id}/collection/playlists/{playlist-id} (DELETE) Delete playlist
+- [X] /api/v1/user/{user-id}/collection/playlists/{playlist-id} (DELETE) Delete playlist
 - [ ] /api/v1/user/{user-id}/collection/playlists/{playlist-id}/items?itemsPerPage=2&page=2&orderBy=RAND() (GET) Read items
 
 - [ ] /api/v1/user/{user-id}/collection/items (POST) Create new playlist item

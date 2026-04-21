@@ -442,6 +442,64 @@
                         "$ref": "#/components/responses/notFound"
                     }
                 }
+            },
+            "delete": {
+                "summary": "Delete playlist.",
+                "description": "Deletes the playlist.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/playlistId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/baseMessage"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "example": "success"
+                                                            },
+                                                            "code": {
+                                                                "example": 201
+                                                            },
+                                                            "title": {
+                                                                "example": "Deleted."
+                                                            },
+                                                            "description": {
+                                                                "example": "Playlist deleted."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                }
             }
         },
         "/api/v1/user/{user-id}/collection/playlists": {

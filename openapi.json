@@ -2,6 +2,7 @@
     "openapi": "3.0.3",
     "info": {
         "title": "Wishgranter Rest API",
+        "description": "This describes a restful API for a web-based music player. This is part of the [Wishgranter project](https://github.com/orgs/Wishgranter-project).",
         "version": "1.0"
     },
     "servers": [
@@ -20,6 +21,16 @@
                 },
                 "required": true,
                 "example": "johnny-silverhand"
+            },
+            "playlistId": {
+                "name": "playlist-id",
+                "description": "A playlist id withing a collection.",
+                "in": "path",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true,
+                "example": "samurais-best"
             },
             "itemsPerPage": {
                 "name": "itemsPerPage",
@@ -42,26 +53,194 @@
             }
         },
         "schemas": {
-            "playlist": {
+            "baseMessage": {
                 "type": "object",
-                "description": "Describes a playlist object",
+                "description": "A generic message object.",
                 "properties": {
-                    "id": {
+                    "type": {
+                        "description": "Type of the message",
                         "type": "string",
-                        "description": "The playlist id",
-                        "example": "samurais-best"
+                        "enum": [
+                            "success",
+                            "error",
+                            "warning",
+                            "info"
+                        ]
+                    },
+                    "code": {
+                        "type": "integer",
+                        "description": "Machine code associated to the message, like an error code for example."
                     },
                     "title": {
                         "type": "string",
-                        "description": "The human-readable title.",
+                        "description": "Short summary."
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "A human-readable description of the message."
+                    }
+                }
+            },
+            "messageNothingFound": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/baseMessage"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "example": "error"
+                            },
+                            "code": {
+                                "example": 404
+                            },
+                            "title": {
+                                "example": "Not found."
+                            },
+                            "description": {
+                                "example": "We could not find what you are looking for."
+                            }
+                        }
+                    }
+                ]
+            },
+            "messageAccessDenied": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/baseMessage"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "example": "error"
+                            },
+                            "code": {
+                                "example": 403
+                            },
+                            "title": {
+                                "example": "Access denied."
+                            },
+                            "description": {
+                                "example": "You are not authorized to access this resource."
+                            }
+                        }
+                    }
+                ]
+            },
+            "messageInvalidParameter": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/baseMessage"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "example": "error"
+                            },
+                            "code": {
+                                "example": 400
+                            },
+                            "title": {
+                                "example": "Invalid parameter."
+                            },
+                            "description": {
+                                "example": "Parameter X must be type Y."
+                            }
+                        }
+                    }
+                ]
+            },
+            "basePlaylist": {
+                "type": "object",
+                "description": "Describes a playlist object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "The human-readable title of the playlist.",
                         "example": "Samurai's best"
                     },
                     "description": {
                         "type": "string",
                         "description": "The human-readable description.",
-                        "example": "Samurai's all time best tracks."
+                        "example": "Samurai's all time bangers."
                     }
                 }
+            },
+            "playlist": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/basePlaylist"
+                    },
+                    {
+                        "type": "object",
+                        "description": "Describes a playlist object",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "description": "The playlist id",
+                                "example": "samurais-best"
+                            }
+                        }
+                    }
+                ]
+            },
+            "playableItem": {
+                "type": "object",
+                "description": "A description of a playable item, a music or an album.",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "The music's title."
+                    },
+                    "artist": {
+                        "type": "array",
+                        "description": "The performing artist(s)."
+                    },
+                    "featuring": {
+                        "type": "array",
+                        "description": "Featured artist(s)."
+                    },
+                    "cover": {
+                        "type": "string",
+                        "description": "The original artist if the music is being performed by someone else."
+                    },
+                    "album": {
+                        "type": "string",
+                        "description": "The album's title."
+                    },
+                    "soundtrack": {
+                        "type": "array",
+                        "description": "An intellectual property featuring the music."
+                    },
+                    "genre": {
+                        "type": "array",
+                        "description": "Musical genre(s) the item belongs to."
+                    },
+                    "xxx": {
+                        "type": "string",
+                        "description": ""
+                    }
+                }
+            },
+            "playlistItem": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/playableItem"
+                    },
+                    {
+                        "type": "object",
+                        "description": "A playable item saved within a playlist.",
+                        "properties": {
+                            "uuid": {
+                                "type": "string",
+                                "description": "An unique identifier."
+                            }
+                        }
+                    }
+                ]
             },
             "page": {
                 "type": "object",
@@ -78,7 +257,7 @@
                             },
                             "itemsPerPage": {
                                 "type": "integer",
-                                "description": "Maximum number of item a page must contain.",
+                                "description": "Maximum number of items a page may contain.",
                                 "example": 10
                             },
                             "pages": {
@@ -104,11 +283,170 @@
                     }
                 }
             }
+        },
+        "responses": {
+            "accessDenied": {
+                "description": "Access denied",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "messages": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/messageAccessDenied"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "notFound": {
+                "description": "Not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "messages": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/messageNothingFound"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "invalidData": {
+                "description": "Invalid data",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "messages": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/messageInvalidParameter"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "paths": {
-        "/user/{user-id}/collection/playlists": {
+        "/api/v1/user/{user-id}/collection/playlists/{playlist-id}": {
             "get": {
+                "summary": "Retrieves a playlist.",
+                "description": "Returns a single playlist.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/playlistId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/playlist"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update playlist.",
+                "description": "Updates the playlist.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/playlistId"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/basePlaylist"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/baseMessage"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "example": "success"
+                                                            },
+                                                            "code": {
+                                                                "example": 200
+                                                            },
+                                                            "title": {
+                                                                "example": "Success."
+                                                            },
+                                                            "description": {
+                                                                "example": "The playlist has been updated."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/playlist"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                }
+            }
+        },
+        "/api/v1/user/{user-id}/collection/playlists": {
+            "get": {
+                "summary": "Browse the collection.",
                 "description": "Return a list of playlists belonging to the specified user.",
                 "parameters": [
                     {
@@ -140,6 +478,72 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    }
+                }
+            },
+            "post": {
+                "summary": "New playlist.",
+                "description": "Creates a new playlist for the user's collection.",
+                "operationId": "createPlaylist",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/basePlaylist"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/baseMessage"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "example": "success"
+                                                            },
+                                                            "code": {
+                                                                "example": 201
+                                                            },
+                                                            "title": {
+                                                                "example": "Success."
+                                                            },
+                                                            "description": {
+                                                                "example": "A new playlist has been created."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/playlist"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
                     }
                 }
             }

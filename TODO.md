@@ -9,12 +9,12 @@ The end points that need to be documentated:
 - [X] /api/v1/user/{user-id}/collection/playlists/{playlist-id} (PUT) Update existing playlist
 - [X] /api/v1/user/{user-id}/collection/playlists/{playlist-id} (DELETE) Delete playlist
 
-- [ ] /api/v1/user/{user-id}/collection/items (POST) Create new playlist item
+- [X] /api/v1/user/{user-id}/collection/items (POST) Create new playlist item
 - [ ] /api/v1/user/{user-id}/collection/items (POST) Create copy
-- [ ] /api/v1/user/{user-id}/collection/items/{uuid} (GET) Get individual playlist item
-- [ ] /api/v1/user/{user-id}/collection/items/{uuid} (PUT) Update individual playlist item
-- [ ] /api/v1/user/{user-id}/collection/items/{uuid} (DELETE) Delete individual playlist item
-- [ ] /api/v1/user/{user-id}/collection/items (GET) Search playlist items
+- [ ] /api/v1/user/{user-id}/collection/items (GET)  Search playlist items
+- [X] /api/v1/user/{user-id}/collection/items/{uuid} (GET) Get individual playlist item
+- [X] /api/v1/user/{user-id}/collection/items/{uuid} (PUT) Update individual playlist item
+- [X] /api/v1/user/{user-id}/collection/items/{uuid} (DELETE) Delete individual playlist item
 
 - [ ] /api/v1/user/{user-id}/collection/artists (GET) List of artists
 

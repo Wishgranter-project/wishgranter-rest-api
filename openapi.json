@@ -27,7 +27,7 @@
     "components": {
         "parameters": {
             "userId": {
-                "name": "user-id",
+                "name": "userId",
                 "description": "The user's unique id.",
                 "in": "path",
                 "schema": {
@@ -37,7 +37,7 @@
                 "example": "johnny-silverhand"
             },
             "playlistId": {
-                "name": "playlist-id",
+                "name": "playlistId",
                 "description": "A playlist id withing a collection.",
                 "in": "path",
                 "schema": {
@@ -45,6 +45,16 @@
                 },
                 "required": true,
                 "example": "samurais-best"
+            },
+            "itemUuid": {
+                "name": "itemUuid",
+                "description": "A playlist item uuid.",
+                "in": "path",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true,
+                "example": "c9d7a4ed-11a5-4f37-a2b3-0e9b3161f816"
             },
             "itemsPerPage": {
                 "name": "itemsPerPage",
@@ -213,7 +223,7 @@
                     "artist": {
                         "type": "array",
                         "description": "The performing artist(s).",
-                        "example": ["Samurai"],
+                        "example": ["Johnny Silverhand"],
                         "items": {
                           "type": "string"
                         }
@@ -223,7 +233,8 @@
                         "description": "Featured artist(s).",
                         "items": {
                           "type": "string"
-                        }
+                        },
+                        "example": ["Kerry Eurodine"]
                     },
                     "cover": {
                         "type": "string",
@@ -231,25 +242,24 @@
                     },
                     "album": {
                         "type": "string",
-                        "description": "The album's title."
+                        "description": "The album's title.",
+                        "example": "Never gonna fade away"
                     },
                     "soundtrack": {
                         "type": "array",
                         "description": "An intellectual property featuring the music.",
                         "items": {
                           "type": "string"
-                        }
+                        },
+                        "example": ["Cyberpunk 2077"]
                     },
                     "genre": {
                         "type": "array",
                         "description": "Musical genre(s) the item belongs to.",
                         "items": {
                           "type": "string"
-                        }
-                    },
-                    "xxx": {
-                        "type": "string",
-                        "description": ""
+                        },
+                        "example": ["Rock"]
                     }
                 }
             },
@@ -264,7 +274,13 @@
                         "properties": {
                             "uuid": {
                                 "type": "string",
-                                "description": "An unique identifier."
+                                "description": "An unique identifier.",
+                                "example": "6a890f6e-e03f-4bda-9b09-42aac95917f0"
+                            },
+                            "xxxOriginal": {
+                                "type": "string",
+                                "description": "",
+                                "example": "f448de5e-5f04-4d1b-9ce6-0a308ca2c462"
                             }
                         }
                     }
@@ -377,14 +393,85 @@
         }
     },
     "paths": {
-        "/api/v1/user/{user-id}/collection/playlists/{playlist-id}/download": {
-            "get": {
-                "operationId": "downloadPlaylist",
+        "/api/v1/user/{userId}/collection/playlists": {
+            "post": {
+                "operationId": "createNewPlaylist",
                 "tags": [
                     "playlists"
                 ],
-                "summary": "Download playlist.",
-                "description": "Downloads the specified playlist.",
+                "summary": "Create new playlist.",
+                "description": "Creates a new playlist for the user's collection.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/basePlaylist"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/baseMessage"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "example": "success"
+                                                            },
+                                                            "code": {
+                                                                "example": 201
+                                                            },
+                                                            "title": {
+                                                                "example": "Success."
+                                                            },
+                                                            "description": {
+                                                                "example": "A new playlist has been created."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/playlist"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    }
+                }
+            },
+            "get": {
+                "operationId": "listPlaylists",
+                "tags": [
+                    "playlists"
+                ],
+                "summary": "List playlists.",
+                "description": "Returns a list of playlists belonging to the specified user.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -395,42 +482,45 @@
                         "$ref": "#/components/parameters/userId"
                     },
                     {
-                        "$ref": "#/components/parameters/playlistId"
+                        "$ref": "#/components/parameters/itemsPerPage"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "headers": {
-                            "content-type": {
-                                "description": "Mime type",
-                                "example": "application/jsonl",
+                        "content": {
+                            "application/json": {
                                 "schema": {
-                                    "type": "string"
-                                }
-                            },
-                            "content-disposition": {
-                                "description": "Content disposition",
-                                "example": "attachment; filename=\"playlist-name.dpls\"",
-                                "schema": {
-                                    "type": "string"
+                                  "allOf": [
+                                      {
+                                        "$ref": "#/components/schemas/page"
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "array",
+                                                "items": {
+                                                    "$ref": "#/components/schemas/playlist"
+                                                }
+                                            }
+                                        }
+                                      }
+                                  ]
                                 }
                             }
-                        },
-                        "content": {
-                            
                         }
                     },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/notFound"
                     }
                 }
             }
         },
-        "/api/v1/user/{user-id}/collection/playlists/{playlist-id}": {
+        "/api/v1/user/{userId}/collection/playlists/{playlistId}": {
             "get": {
                 "operationId": "getPlaylist",
                 "tags": [
@@ -624,14 +714,14 @@
                 }
             }
         },
-        "/api/v1/user/{user-id}/collection/playlists": {
+        "/api/v1/user/{userId}/collection/playlists/{playlistId}/download": {
             "get": {
-                "operationId": "listPlaylists",
+                "operationId": "downloadPlaylist",
                 "tags": [
                     "playlists"
                 ],
-                "summary": "List playlists.",
-                "description": "Returns a list of playlists belonging to the specified user.",
+                "summary": "Download playlist.",
+                "description": "Downloads the specified playlist.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -642,116 +732,42 @@
                         "$ref": "#/components/parameters/userId"
                     },
                     {
-                        "$ref": "#/components/parameters/itemsPerPage"
-                    },
-                    {
-                        "$ref": "#/components/parameters/page"
+                        "$ref": "#/components/parameters/playlistId"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "content": {
-                            "application/json": {
+                        "headers": {
+                            "content-type": {
+                                "description": "Mime type",
+                                "example": "application/jsonl",
                                 "schema": {
-                                  "allOf": [
-                                      {
-                                        "$ref": "#/components/schemas/page"
-                                      },
-                                      {
-                                        "type": "object",
-                                        "properties": {
-                                            "data": {
-                                                "type": "array",
-                                                "items": {
-                                                    "$ref": "#/components/schemas/playlist"
-                                                }
-                                            }
-                                        }
-                                      }
-                                  ]
+                                    "type": "string"
+                                }
+                            },
+                            "content-disposition": {
+                                "description": "Content disposition",
+                                "example": "attachment; filename=\"playlist-name.dpls\"",
+                                "schema": {
+                                    "type": "string"
                                 }
                             }
+                        },
+                        "content": {
+                            
                         }
                     },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
-                    }
-                }
-            },
-            "post": {
-                "operationId": "createNewPlaylist",
-                "tags": [
-                    "playlists"
-                ],
-                "summary": "Create new playlist.",
-                "description": "Creates a new playlist for the user's collection.",
-                "security": [
-                    {
-                        "cookieAuthentication": []
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "$ref": "#/components/schemas/basePlaylist"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "messages": {
-                                            "type": "array",
-                                            "items": {
-                                                "allOf": [
-                                                    {
-                                                        "$ref": "#/components/schemas/baseMessage"
-                                                    },
-                                                    {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "type": {
-                                                                "example": "success"
-                                                            },
-                                                            "code": {
-                                                                "example": 201
-                                                            },
-                                                            "title": {
-                                                                "example": "Success."
-                                                            },
-                                                            "description": {
-                                                                "example": "A new playlist has been created."
-                                                            }
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/playlist"
-                                        }
-                                    }
-                                }
-                            }
-                        }
                     },
-                    "400": {
-                        "$ref": "#/components/responses/invalidData"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/accessDenied"
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
                     }
                 }
             }
         },
-        "/api/v1/user/{user-id}/collection/items": {
+        "/api/v1/user/{userId}/collection/items": {
             "post": {
                 "operationId": "createNewPlaylistItem",
                 "tags": [
@@ -838,6 +854,306 @@
                     },
                     "400": {
                         "$ref": "#/components/responses/invalidData"
+                    }
+                }
+            },
+            "get": {
+                "operationId": "listPlaylistsItems",
+                "tags": [
+                    "playlistItems"
+                ],
+                "summary": "List playlist items.",
+                "description": "Returns a list of playlists items.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/itemsPerPage"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    },
+                    {
+                        "name": "playlistIds",
+                        "description": "The playlists to search for items in.",
+                        "in": "query",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                        },
+                        "required": false,
+                        "example": ["samurais-best"]
+                    },
+                    {
+                        "name": "title",
+                        "description": "To match against the item titles.",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": false,
+                        "example": "Black Dog"
+                    },
+                    {
+                        "name": "artist",
+                        "description": "To match against the item artists.",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": false,
+                        "example": "Johnny Silverhand"
+                    },
+                    {
+                        "name": "genre",
+                        "description": "To match against the item genres.",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": false,
+                        "example": "Rock"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                  "allOf": [
+                                      {
+                                        "$ref": "#/components/schemas/page"
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "array",
+                                                "items": {
+                                                    "$ref": "#/components/schemas/playlistItem"
+                                                }
+                                            }
+                                        }
+                                      }
+                                  ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    }
+                }
+            }
+        },
+        "/api/v1/user/{userId}/collection/items/{itemUuid}": {
+            "get": {
+                "operationId": "getPlaylistItem",
+                "tags": [
+                    "playlistItems"
+                ],
+                "summary": "Retrieves a playlist item.",
+                "description": "Returns a single playlist item.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/playlistId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/itemUuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "properties": {
+                                "data": {
+                                  "$ref": "#/components/schemas/playlistItem"
+                                }
+                              }
+                            }
+                          }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                }
+            },
+            "put": {
+                "operationId": "updatePlaylistItem",
+                "tags": [
+                    "playlistItems"
+                ],
+                "summary": "Update playlist item.",
+                "description": "Updates the specified playlist item.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/playlistId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/itemUuid"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/playableItem"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/baseMessage"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "example": "success"
+                                                            },
+                                                            "code": {
+                                                                "example": 200
+                                                            },
+                                                            "title": {
+                                                                "example": "Success."
+                                                            },
+                                                            "description": {
+                                                                "example": "The item has been updated."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/playlistItem"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "deletePlaylistItem",
+                "tags": [
+                    "playlistItems"
+                ],
+                "summary": "Delete playlist item.",
+                "description": "Deletes the specified playlist item.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/playlistId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/itemUuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/baseMessage"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "example": "success"
+                                                            },
+                                                            "code": {
+                                                                "example": 201
+                                                            },
+                                                            "title": {
+                                                                "example": "Deleted."
+                                                            },
+                                                            "description": {
+                                                                "example": "Item deleted."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
                     }
                 }
             }

@@ -286,6 +286,27 @@
                     }
                 ]
             },
+            "session": {
+                "type": "object",
+                "description": "Session object.",
+                "properties": {
+                    "userId": {
+                        "type": "string",
+                        "description": "The user id",
+                        "example": "johnny-silverhand"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The user's name.",
+                        "example": "Johnny Silverhand"
+                    },
+                    "expiration": {
+                        "type": "number",
+                        "description": "Timestamp",
+                        "example": "1692536400"
+                    }
+                }
+            },
             "page": {
                 "type": "object",
                 "description": "Describes a set of item within a set, a page.",
@@ -1188,7 +1209,13 @@
                         "description": "OK",
                         "content": {
                             "application/json": {
-
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/session"
+                                        }
+                                    }
+                                }
                             }
                         }
                     },

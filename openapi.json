@@ -393,7 +393,7 @@
         }
     },
     "paths": {
-        "/api/v1/user/{userId}/collection/playlists": {
+        "/api/v1/users/{userId}/collection/playlists": {
             "post": {
                 "operationId": "createNewPlaylist",
                 "tags": [
@@ -520,7 +520,7 @@
                 }
             }
         },
-        "/api/v1/user/{userId}/collection/playlists/{playlistId}": {
+        "/api/v1/users/{userId}/collection/playlists/{playlistId}": {
             "get": {
                 "operationId": "getPlaylist",
                 "tags": [
@@ -714,7 +714,7 @@
                 }
             }
         },
-        "/api/v1/user/{userId}/collection/playlists/{playlistId}/download": {
+        "/api/v1/users/{userId}/collection/playlists/{playlistId}/download": {
             "get": {
                 "operationId": "downloadPlaylist",
                 "tags": [
@@ -767,7 +767,7 @@
                 }
             }
         },
-        "/api/v1/user/{userId}/collection/items": {
+        "/api/v1/users/{userId}/collection/items": {
             "post": {
                 "operationId": "createNewPlaylistItem",
                 "tags": [
@@ -955,7 +955,7 @@
                 }
             }
         },
-        "/api/v1/user/{userId}/collection/items/{itemUuid}": {
+        "/api/v1/users/{userId}/collection/items/{itemUuid}": {
             "get": {
                 "operationId": "getPlaylistItem",
                 "tags": [

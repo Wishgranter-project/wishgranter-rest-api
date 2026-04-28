@@ -1157,6 +1157,46 @@
                     }
                 }
             }
+        },
+        "/api/v1/user/login": {
+            "post": {
+                "operationId": "login",
+                "tags": [
+                    "user"
+                ],
+                "summary": "Login.",
+                "description": "Open a new session.",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
+                    }
+                }
+            }
         }
     }
 }

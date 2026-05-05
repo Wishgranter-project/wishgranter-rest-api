@@ -22,6 +22,10 @@
         {
             "name": "user",
             "description": "Everything about the users"
+        },
+        {
+            "name": "discover",
+            "description": "Discover new music"
         }
     ],
     "components": {
@@ -304,6 +308,31 @@
                         "type": "number",
                         "description": "Timestamp",
                         "example": "1692536400"
+                    }
+                }
+            },
+            "artist": {
+                "type": "object",
+                "description": "Describes an artist or band",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The human-readable name of the artist or band.",
+                        "example": "Blind guardian"
+                    },
+                    "thumbnail": {
+                        "type": "string",
+                        "description": "Absolute URL to a thumbnail.",
+                        "example": "https://discogs.com/blind-guardian.jpg"
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "Machine name of the service that we extracted this information from.",
+                        "example": "discogs"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "Unique identifier within the source."
                     }
                 }
             },
@@ -901,7 +930,7 @@
                         "$ref": "#/components/parameters/page"
                     },
                     {
-                        "name": "playlistIds",
+                        "name": "playlistId",
                         "description": "The playlists to search for items in.",
                         "in": "query",
                         "schema": {
@@ -936,6 +965,16 @@
                     {
                         "name": "genre",
                         "description": "To match against the item genres.",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": false,
+                        "example": "Rock"
+                    },
+                    {
+                        "name": "soundtrack",
+                        "description": "To match against the item soundtrack.",
                         "in": "query",
                         "schema": {
                             "type": "string"
@@ -1211,6 +1250,33 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/baseMessage"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "example": "success"
+                                                            },
+                                                            "code": {
+                                                                "example": 200
+                                                            },
+                                                            "title": {
+                                                                "example": "Hello."
+                                                            },
+                                                            "description": {
+                                                                "example": "Welcome back."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
                                         "data": {
                                             "$ref": "#/components/schemas/session"
                                         }
@@ -1221,6 +1287,108 @@
                     },
                     "400": {
                         "$ref": "#/components/responses/invalidData"
+                    }
+                }
+            }
+        },
+        "/api/v1/user/logout": {
+            "get": {
+                "operationId": "logout",
+                "tags": [
+                    "user"
+                ],
+                "summary": "Logout.",
+                "description": "Closes the current session.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/baseMessage"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "example": "success"
+                                                            },
+                                                            "code": {
+                                                                "example": 200
+                                                            },
+                                                            "title": {
+                                                                "example": "Success."
+                                                            },
+                                                            "description": {
+                                                                "example": "Good bye."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    }
+                }
+            }
+        },
+        "/api/v1/discover/artists": {
+            "get": {
+                "operationId": "discoverArtists",
+                "tags": [
+                    "discover"
+                ],
+                "summary": "Discover artists.",
+                "description": "Find out bands and musicians.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name of an artist or band",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Blind guardian"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/artist"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

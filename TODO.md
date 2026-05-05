@@ -9,14 +9,14 @@ The end points that need to be documentated:
 
 ---
 
-## /api/v1/users/{user-id}/collection/playlists/{playlist-id}
+## [X] /api/v1/users/{user-id}/collection/playlists/{playlist-id}
 - [X] GET: Retrieve individual playlist.
 - [X] PUT: Update individual playlist.
 - [X] DELETE: Delete individual playlist.
 
 ---
 
-## /api/v1/users/{user-id}/collection/playlists/{playlist-id}/download
+## [X] /api/v1/users/{user-id}/collection/playlists/{playlist-id}/download
 - [X] GET: Download the playlist.
 
 ---

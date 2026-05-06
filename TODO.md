@@ -9,6 +9,11 @@ The end points that need to be documentated:
 
 ---
 
+## [X] /api/v1/users/{user-id}/collection/download
+- [X] GET: Download entire collection.
+
+---
+
 ## [X] /api/v1/users/{user-id}/collection/playlists/{playlist-id}
 - [X] GET: Retrieve individual playlist.
 - [X] PUT: Update individual playlist.

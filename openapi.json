@@ -12,6 +12,10 @@
     ],
     "tags": [
         {
+            "name": "collection",
+            "description": "Everything about your collection"
+        },
+        {
             "name": "playlists",
             "description": "Everything about your playlists"
         },
@@ -443,6 +447,42 @@
         }
     },
     "paths": {
+        "/api/v1/users/{userId}/collection/artists": {
+            "get": {
+                "operationId": "getCollectionArtists",
+                "tags": [
+                    "collection"
+                ],
+                "summary": "Retrieves the artists in the collection.",
+                "description": "Retrieves the artists in the collection.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/users/{userId}/collection/playlists": {
             "post": {
                 "operationId": "createNewPlaylist",
@@ -454,6 +494,11 @@
                 "security": [
                     {
                         "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
                     }
                 ],
                 "requestBody": {

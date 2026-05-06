@@ -344,7 +344,7 @@
                         "description": "Meta data about the pagination.",
                         "type": "object",
                         "properties": {
-                            "total": {
+                            "resultsCount": {
                                 "type": "integer",
                                 "description": "The total number of items to be listed.",
                                 "example": 100
@@ -354,17 +354,17 @@
                                 "description": "Maximum number of items a page may contain.",
                                 "example": 10
                             },
-                            "pages": {
+                            "pagesCount": {
                                 "type": "integer",
                                 "description": "How many pages there are.",
                                 "example": 10
                             },
-                            "page": {
+                            "currentPage": {
                                 "type": "integer",
                                 "description": "The current page.",
                                 "example": 1
                             },
-                            "count": {
+                            "currentPageCount": {
                                 "type": "integer",
                                 "description": "Number of items within this set, this page. Naturally equal or less than itemsPerPage",
                                 "example": 10

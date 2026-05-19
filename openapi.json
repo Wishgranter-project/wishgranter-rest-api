@@ -1263,7 +1263,7 @@
                 }
             }
         },
-        "/api/v1/user/login": {
+        "/api/v1/session/login": {
             "post": {
                 "operationId": "login",
                 "tags": [
@@ -1336,7 +1336,7 @@
                 }
             }
         },
-        "/api/v1/user/logout": {
+        "/api/v1/session/logout": {
             "get": {
                 "operationId": "logout",
                 "tags": [
@@ -1385,6 +1385,64 @@
                     },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
+                    }
+                }
+            }
+        },
+        "/api/v1/session": {
+            "get": {
+                "operationId": "getSession",
+                "tags": [
+                    "user"
+                ],
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "summary": "Get session.",
+                "description": "Retrieve information about the current session.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/baseMessage"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "example": "success"
+                                                            },
+                                                            "code": {
+                                                                "example": 200
+                                                            },
+                                                            "title": {
+                                                                "example": "Hello."
+                                                            },
+                                                            "description": {
+                                                                "example": "Welcome back."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/session"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

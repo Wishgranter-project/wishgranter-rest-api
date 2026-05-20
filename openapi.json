@@ -1263,7 +1263,7 @@
                 }
             }
         },
-        "/api/v1/session/login": {
+        "/api/v1/session": {
             "post": {
                 "operationId": "login",
                 "tags": [
@@ -1334,62 +1334,7 @@
                         "$ref": "#/components/responses/invalidData"
                     }
                 }
-            }
-        },
-        "/api/v1/session/logout": {
-            "get": {
-                "operationId": "logout",
-                "tags": [
-                    "user"
-                ],
-                "summary": "Logout.",
-                "description": "Closes the current session.",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "messages": {
-                                            "type": "array",
-                                            "items": {
-                                                "allOf": [
-                                                    {
-                                                        "$ref": "#/components/schemas/baseMessage"
-                                                    },
-                                                    {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "type": {
-                                                                "example": "success"
-                                                            },
-                                                            "code": {
-                                                                "example": 200
-                                                            },
-                                                            "title": {
-                                                                "example": "Success."
-                                                            },
-                                                            "description": {
-                                                                "example": "Good bye."
-                                                            }
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/accessDenied"
-                    }
-                }
-            }
-        },
-        "/api/v1/session": {
+            },
             "get": {
                 "operationId": "getSession",
                 "tags": [
@@ -1443,6 +1388,57 @@
                                 }
                             }
                         }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "logout",
+                "tags": [
+                    "user"
+                ],
+                "summary": "Logout.",
+                "description": "Closes the current session.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/baseMessage"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "example": "success"
+                                                            },
+                                                            "code": {
+                                                                "example": 200
+                                                            },
+                                                            "title": {
+                                                                "example": "Success."
+                                                            },
+                                                            "description": {
+                                                                "example": "Good bye."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
                     }
                 }
             }

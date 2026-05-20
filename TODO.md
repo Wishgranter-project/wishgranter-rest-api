@@ -40,25 +40,28 @@ The end points that need to be documentated:
 
 ---
 
-## [ ] /api/v1/users/{user-id}/collection/artists
-- [ ] GET: List of artists in the collection.
+## [X] /api/v1/users/{user-id}/collection/artists
+- [X] GET: List of artists in the collection.
 
 ---
 
-## [X] /api/v1/users/login
+## [X] /api/v1/session
 - [X] POST: Authenticate.
 
-## [X] /api/v1/users/logout
-- GET: Logout.
+## [X] /api/v1/session
+- DELETE: Logout.
 
-## [ ] /api/v1/users/session
+## [X] /api/v1/session
 - GET: Get session info.
 
 ---
 
-- [X] /api/v1/discover/artists
+## [ ] /api/v1/discover/artists
+- GET: get artists
+
 - [ ] /api/v1/discover/albums
 - [ ] /api/v1/discover/album
 
+---
 
 - [ ] /api/v1/wish-for/music

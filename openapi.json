@@ -500,7 +500,7 @@
                     }
                 ],
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "OK",
                         "content": {
                             "application/json": {
@@ -510,6 +510,39 @@
                                             "type": "object"
                                         }
                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/{userId}/collection/download": {
+            "get": {
+                "operationId": "downloadCollection",
+                "tags": [
+                    "collection"
+                ],
+                "summary": "Downloads the collection.",
+                "description": "Downloads all the playlists.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/zip": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
                                 }
                             }
                         }

@@ -49,18 +49,21 @@ The end points that need to be documentated:
 - [X] POST: Authenticate.
 
 ## [X] /api/v1/session
-- DELETE: Logout.
+- [X] DELETE: Logout.
 
 ## [X] /api/v1/session
-- GET: Get session info.
+- [X] GET: Get session info.
 
 ---
 
-## [ ] /api/v1/discover/artists
-- GET: get artists
+## [X] /api/v1/discover/artists
+- [X] GET: get artists
 
-- [ ] /api/v1/discover/albums
-- [ ] /api/v1/discover/album
+## [X]
+- [X] GET: /api/v1/discover/albums
+
+## [ ]
+- [ ] GET: /api/v1/discover/album
 
 ---
 

@@ -1,9 +1,9 @@
 # Wishgranter Rest API
 
-This repository specifies a web-based restful API to manage a collection of 
-music playlists.
+This repository specifies a web-based restful API to manage collections of 
+descriptive playlists.
 
-It follows the [Open API](https://learn.openapis.org/specification/docs) 
+It uses the [Open API](https://learn.openapis.org/specification/docs) 
 standard.
 
 This is part of the wide Wishgranter project.
@@ -20,13 +20,15 @@ Responses must use apropriate codes, 200, 40*, 50* etc.
 Post/put requests use the form-data format, responses use json.
 
 ### Schema
-All responses return an object encapsulating the information in three properties:
+All responses return an object encapsulating the information in three 
+properties:
 
 - `data`: The actual information we asked for.
 - `meta`: Adjacent information about the `data`.
 - `messages`: Status messages, infos, warnings, errors, debug ...
 
-As an example of what a typical response looks like, this is what you may expect of a search result:
+As an example of what a typical response looks like, this is what you may 
+expect of a search result:
 
 ```json
 {

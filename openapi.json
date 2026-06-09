@@ -829,7 +829,7 @@
                     }
                 ],
                 "responses": {
-                    "204": {
+                    "200": {
                         "description": "OK",
                         "content": {
                             "application/json": {
@@ -849,7 +849,7 @@
                                                                 "example": "success"
                                                             },
                                                             "code": {
-                                                                "example": 204
+                                                                "example": 200
                                                             },
                                                             "title": {
                                                                 "example": "Deleted."
@@ -1284,7 +1284,7 @@
                     }
                 ],
                 "responses": {
-                    "204": {
+                    "200": {
                         "description": "OK",
                         "content": {
                             "application/json": {
@@ -1304,7 +1304,7 @@
                                                                 "example": "success"
                                                             },
                                                             "code": {
-                                                                "example": 204
+                                                                "example": 200
                                                             },
                                                             "title": {
                                                                 "example": "Deleted."
@@ -1467,7 +1467,7 @@
                 "summary": "Logout.",
                 "description": "Closes the current session.",
                 "responses": {
-                    "204": {
+                    "200": {
                         "description": "OK",
                         "content": {
                             "application/json": {
@@ -1487,7 +1487,7 @@
                                                                 "example": "success"
                                                             },
                                                             "code": {
-                                                                "example": 204
+                                                                "example": 200
                                                             },
                                                             "title": {
                                                                 "example": "Success."

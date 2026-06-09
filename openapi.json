@@ -36,7 +36,7 @@
         "parameters": {
             "userId": {
                 "name": "userId",
-                "description": "The user's unique id.",
+                "description": "The user's unique id in system.",
                 "in": "path",
                 "schema": {
                     "type": "string"
@@ -46,7 +46,7 @@
             },
             "playlistId": {
                 "name": "playlistId",
-                "description": "A playlist id withing a collection.",
+                "description": "The id of a playlist within a collection.",
                 "in": "path",
                 "schema": {
                     "type": "string"
@@ -56,7 +56,7 @@
             },
             "itemUuid": {
                 "name": "itemUuid",
-                "description": "A playlist item uuid.",
+                "description": "The uuid V4 of a playlist item.",
                 "in": "path",
                 "schema": {
                     "type": "string"
@@ -109,7 +109,7 @@
                     },
                     "description": {
                         "type": "string",
-                        "description": "A human-readable description of the message."
+                        "description": "A more detailed description."
                     }
                 }
             },
@@ -179,7 +179,7 @@
                                 "example": "Invalid parameter."
                             },
                             "description": {
-                                "example": "Parameter X must be type Y."
+                                "example": "Parameter X must be of the type Y."
                             }
                         }
                     }
@@ -212,7 +212,7 @@
                         "properties": {
                             "id": {
                                 "type": "string",
-                                "description": "The playlist id",
+                                "description": "The playlist's id",
                                 "example": "samurais-best"
                             }
                         }
@@ -221,7 +221,7 @@
             },
             "playableItem": {
                 "type": "object",
-                "description": "A description of a playable item, a music or an album.",
+                "description": "A description of a playable item, a song or a full album.",
                 "properties": {
                     "title": {
                         "type": "string",
@@ -287,7 +287,7 @@
                             },
                             "xxxOriginal": {
                                 "type": "string",
-                                "description": "",
+                                "description": "The UUID of the original item, marking this one as a copy. It essentially allows us to have the same music in multiple playlist. Changes in one should be reflected in the others.",
                                 "example": "f448de5e-5f04-4d1b-9ce6-0a308ca2c462"
                             }
                         }
@@ -300,7 +300,7 @@
                 "properties": {
                     "userId": {
                         "type": "string",
-                        "description": "The user id",
+                        "description": "The user id within the system",
                         "example": "johnny-silverhand"
                     },
                     "name": {
@@ -376,7 +376,7 @@
             },
             "page": {
                 "type": "object",
-                "description": "Describes a set of item within a set, a page.",
+                "description": "Describes a set of items within a larger set, a page.",
                 "properties": {
                     "meta": {
                         "description": "Meta data about the pagination.",
@@ -483,12 +483,12 @@
     "paths": {
         "/api/v1/users/{userId}/collection/artists": {
             "get": {
-                "operationId": "getCollectionArtists",
+                "operationId": "getArtistsInTheCollection",
                 "tags": [
                     "collection"
                 ],
-                "summary": "Retrieves the artists in the collection.",
-                "description": "Retrieves the artists in the collection.",
+                "summary": "Retrieves artists in the collection.",
+                "description": "Returns a list of artists named in the collection and a count of items they are associated with.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -524,7 +524,7 @@
                     "collection"
                 ],
                 "summary": "Downloads the collection.",
-                "description": "Downloads all the playlists.",
+                "description": "Downloads all the playlists as a single zip file.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -557,7 +557,7 @@
                     "playlists"
                 ],
                 "summary": "Create new playlist.",
-                "description": "Creates a new playlist for the user's collection.",
+                "description": "Creates a new playlist in the user's collection.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -633,7 +633,7 @@
                     "playlists"
                 ],
                 "summary": "List playlists.",
-                "description": "Returns a list of playlists belonging to the specified user.",
+                "description": "Returns a list of playlists in the user's collection.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -689,7 +689,7 @@
                     "playlists"
                 ],
                 "summary": "Retrieves a playlist.",
-                "description": "Returns a single playlist.",
+                "description": "Returns a single playlist in the collection.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -903,7 +903,7 @@
                         "headers": {
                             "content-type": {
                                 "description": "Mime type",
-                                "example": "application/jsonl",
+                                "example": "application/vnd.dpls+jsonl",
                                 "schema": {
                                     "type": "string"
                                 }
@@ -917,7 +917,11 @@
                             }
                         },
                         "content": {
-                            
+                            "application/vnd.dpls+jsonl": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
                         }
                     },
                     "403": {
@@ -957,7 +961,7 @@
                                         "properties": {
                                             "playlistId": {
                                                 "type": "string",
-                                                "description": "The id of the playlist we are to add the item to."
+                                                "description": "The id of the playlist we are adding the item to."
                                             }
                                         }
                                     },
@@ -1043,7 +1047,7 @@
                     },
                     {
                         "name": "playlistId",
-                        "description": "The playlists to search for items in.",
+                        "description": "The ids of playlists to search for items.",
                         "in": "query",
                         "schema": {
                             "type": "array",
@@ -1056,7 +1060,7 @@
                     },
                     {
                         "name": "title",
-                        "description": "To match against the item titles.",
+                        "description": "Searh parameter to match against the item titles.",
                         "in": "query",
                         "schema": {
                             "type": "string"
@@ -1066,7 +1070,7 @@
                     },
                     {
                         "name": "artist",
-                        "description": "To match against the item artists.",
+                        "description": "Searh parameter to match against the item artists.",
                         "in": "query",
                         "schema": {
                             "type": "string"
@@ -1076,7 +1080,7 @@
                     },
                     {
                         "name": "genre",
-                        "description": "To match against the item genres.",
+                        "description": "Searh parameter to match against the item genres.",
                         "in": "query",
                         "schema": {
                             "type": "string"
@@ -1086,7 +1090,7 @@
                     },
                     {
                         "name": "soundtrack",
-                        "description": "To match against the item soundtrack.",
+                        "description": "Searh parameter to match against the item soundtrack.",
                         "in": "query",
                         "schema": {
                             "type": "string"
@@ -1143,9 +1147,6 @@
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/userId"
-                    },
-                    {
-                        "$ref": "#/components/parameters/playlistId"
                     },
                     {
                         "$ref": "#/components/parameters/itemUuid"
@@ -1337,7 +1338,7 @@
                     "user"
                 ],
                 "summary": "Login.",
-                "description": "Open a new session.",
+                "description": "Opens a new session.",
                 "requestBody": {
                     "content": {
                         "application/x-www-form-urlencoded": {
@@ -1517,7 +1518,7 @@
                     "discover"
                 ],
                 "summary": "Discover artists.",
-                "description": "DIscover new bands and musicians.",
+                "description": "DIscover new bands and artists.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -1527,7 +1528,7 @@
                     {
                         "name": "name",
                         "in": "query",
-                        "description": "Name of an artist or band",
+                        "description": "Searh parameter, name of the artist or band",
                         "schema": {
                             "type": "string"
                         },
@@ -1566,7 +1567,7 @@
                     "discover"
                 ],
                 "summary": "Discover albums.",
-                "description": "DIscover new albums.",
+                "description": "Discover new albums.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -1574,7 +1575,16 @@
                 ],
                 "parameters": [
                     {
-                        "name": "name",
+                        "name": "title",
+                        "in": "query",
+                        "description": "Searh parameter, title of the album",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Nightfall in Middle-Earth"
+                    },
+                    {
+                        "name": "artist",
                         "in": "query",
                         "description": "Name of an artist or band",
                         "schema": {

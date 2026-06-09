@@ -17,7 +17,7 @@ Requests must use the apropriate methods, get, post, put, patch, delete.
 
 Responses must use apropriate codes, 200, 40*, 50* etc.
 
-Post/put requests use the form-data format, responses use json.
+The body of POST/PUT requests use either the form-data or urlencoded formats, responses use json.
 
 ### Schema
 All responses return an object encapsulating the information in three 

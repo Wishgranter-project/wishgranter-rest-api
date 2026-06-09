@@ -1467,7 +1467,7 @@
                 "summary": "Logout.",
                 "description": "Closes the current session.",
                 "responses": {
-                    "200": {
+                    "204": {
                         "description": "OK",
                         "content": {
                             "application/json": {
@@ -1487,7 +1487,7 @@
                                                                 "example": "success"
                                                             },
                                                             "code": {
-                                                                "example": 200
+                                                                "example": 204
                                                             },
                                                             "title": {
                                                                 "example": "Success."

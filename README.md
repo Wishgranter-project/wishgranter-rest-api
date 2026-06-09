@@ -27,6 +27,8 @@ properties:
 - `meta`: Adjacent information about the `data`.
 - `messages`: Status messages, infos, warnings, errors, debug ...
 
+Each may be ommited entirely if there's no data to fill them with.
+
 As an example of what a typical response looks like, this is what you may 
 expect of a search result:
 

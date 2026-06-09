@@ -829,7 +829,7 @@
                     }
                 ],
                 "responses": {
-                    "200": {
+                    "204": {
                         "description": "OK",
                         "content": {
                             "application/json": {
@@ -849,7 +849,7 @@
                                                                 "example": "success"
                                                             },
                                                             "code": {
-                                                                "example": 201
+                                                                "example": 204
                                                             },
                                                             "title": {
                                                                 "example": "Deleted."
@@ -1284,7 +1284,7 @@
                     }
                 ],
                 "responses": {
-                    "200": {
+                    "204": {
                         "description": "OK",
                         "content": {
                             "application/json": {
@@ -1304,7 +1304,7 @@
                                                                 "example": "success"
                                                             },
                                                             "code": {
-                                                                "example": 201
+                                                                "example": 204
                                                             },
                                                             "title": {
                                                                 "example": "Deleted."

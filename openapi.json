@@ -30,6 +30,10 @@
         {
             "name": "discover",
             "description": "Discover new music"
+        },
+        {
+            "name": "wishFor",
+            "description": "Wish for it"
         }
     ],
     "components": {
@@ -415,6 +419,42 @@
                         "items": {
 
                         }
+                    }
+                }
+            },
+            "resource": {
+                "type": "object",
+                "description": "Represents a musical resource that can be reproduced.",
+                "properties": {
+                    "provider": {
+                        "description": "The machine name of the service that is providing it",
+                        "type": "string",
+                        "example": "youtube"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "Id within the provider's system.",
+                        "example": "8ET-5RunUW0"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Title of the resource within the provider's system.",
+                        "example": "Blood of the Morning Star"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Description of the resource within the provider's system.",
+                        "example": "Provided to YouTube by ..."
+                    },
+                    "thumbnail": {
+                        "type": "string",
+                        "description": "Absolute URL to a thumbnail picture.",
+                        "example": "https://i.ytimg.com/vi/8ET-5RunUW0/default.jpg"
+                    },
+                    "href": {
+                        "type": "string",
+                        "description": "Absolute URL to the page of the resource",
+                        "example": "https://youtube.com/watch?v=8ET-5RunUW0"
                     }
                 }
             }
@@ -1614,6 +1654,89 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/api/v1/wish-for/music": {
+            "get": {
+                "operationId": "wishFor",
+                "tags": [
+                    "wishFor"
+                ],
+                "summary": "Wish for music.",
+                "description": "And get it granted.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Title of the music",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Blood of the Morning Star"
+                    },
+                    {
+                        "name": "artist",
+                        "in": "query",
+                        "description": "Artist performing the music",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Dreamtale"
+                    },
+                    {
+                        "name": "cover",
+                        "in": "query",
+                        "description": "The original artist associated to the music if we are looking for a cover.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "genre",
+                        "in": "query",
+                        "description": "Musical genre.",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Metal"
+                    },
+                    {
+                        "name": "soundtrack",
+                        "in": "query",
+                        "description": "Intellectual property featuring the song as part of its soundtrack.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/resource"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
                     }
                 }
             }

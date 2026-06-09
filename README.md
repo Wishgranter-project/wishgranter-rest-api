@@ -1,12 +1,12 @@
 # Wishgranter Rest API
 
 This repository specifies a web-based restful API to manage collections of 
-descriptive playlists.
+[descriptive playlists](https://github.com/Wishgranter-project/descriptive-playlist-definition).
 
 It uses the [Open API](https://learn.openapis.org/specification/docs) 
 standard.
 
-This is part of the wide Wishgranter project.
+This is part of the wide [Wishgranter project](https://github.com/Wishgranter-project).
 
 A web-based description player does not need to implement this API or any, but 
 this remains as an advisable standard to follow.

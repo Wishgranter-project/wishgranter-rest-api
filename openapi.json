@@ -141,6 +141,30 @@
                     }
                 ]
             },
+            "messageUnauthenticated": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/baseMessage"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "example": "error"
+                            },
+                            "code": {
+                                "example": 401
+                            },
+                            "title": {
+                                "example": "Unauthenticated."
+                            },
+                            "description": {
+                                "example": "You need to login first."
+                            }
+                        }
+                    }
+                ]
+            },
             "messageAccessDenied": {
                 "allOf": [
                     {
@@ -460,6 +484,23 @@
             }
         },
         "responses": {
+            "unauthenticated": {
+                "description": "Unauthenticated",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "messages": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/messageUnauthenticated"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "accessDenied": {
                 "description": "Access denied",
                 "content": {
@@ -1496,6 +1537,9 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
                     }
                 }
             },

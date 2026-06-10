@@ -1,7 +1,7 @@
 meta {
   name: LOGIN (400)
   type: http
-  seq: 2
+  seq: 3
 }
 
 post {
@@ -11,30 +11,16 @@ post {
 }
 
 body:multipart-form {
-  username: wront-user
-  password: wrong-password
-}
-
-script:post-response {
-  
-  var session = null;
-  
-  for (var header of res.headers['set-cookie']) {
-    var match = header.match(/session=([\w\d-]+);/)
-    
-    if (match) {
-      session = match[1];
-      break;
-    }
-  }
-  
-  if (session) {
-      bru.setVar('session', session);
-  }
-  
+  username: {{$randomUserName}}
+  password: {{$randomPassword}}
 }
 
 settings {
   encodeUrl: true
   timeout: 0
+}
+
+docs {
+  Example of what a failed login attempt looks lile.
+  
 }

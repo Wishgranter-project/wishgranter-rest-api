@@ -1,7 +1,7 @@
 meta {
   name: SESSION
   type: http
-  seq: 4
+  seq: 1
 }
 
 get {
@@ -19,7 +19,21 @@ script:post-response {
   
 }
 
+tests {
+  test("Test to check the current session.", function () {
+    const status = res.getStatus();
+  
+    // 200: We are authenticated.
+    // 401: We are not.
+    expect(status).to.be.oneOf([200, 401]);
+  });
+}
+
 settings {
   encodeUrl: true
   timeout: 0
+}
+
+docs {
+  Returns information about the current session.
 }

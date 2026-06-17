@@ -1751,7 +1751,7 @@
                     {
                         "name": "title",
                         "in": "query",
-                        "description": "Searh parameter, title of the album",
+                        "description": "Searh parameter, title of the album (optional).",
                         "schema": {
                             "type": "string"
                         },
@@ -1783,6 +1783,95 @@
                                                     }
                                                 ]
                                             }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
+                    }
+                }
+            }
+        },
+        "/api/v1/discover/album": {
+            "get": {
+                "operationId": "getAlbum",
+                "tags": [
+                    "discover"
+                ],
+                "summary": "Retrieve album.",
+                "description": "Returns information about a specific album, including a list of tracks.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Searh parameter, title of the album.",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Nightfall in Middle-Earth",
+                        "required": true
+                    },
+                    {
+                        "name": "artist",
+                        "in": "query",
+                        "description": "Name of an artist or band",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Blind guardian",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/components/schemas/album"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "tracks": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string"
+                                                            },
+                                                            "example": [
+                                                                "Time What Is Time",
+                                                                "Journey Through the Dark",
+                                                                "Black Chamber",
+                                                                "Theatre of Pain",
+                                                                "The Quest for Tanelorn",
+                                                                "Ashes to Ashes",
+                                                                "The Bard's Song – In the Forest",
+                                                                "The Bard's Song – The Hobbit",
+                                                                "The Piper's Calling",
+                                                                "Somewhere Far Beyond"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 }

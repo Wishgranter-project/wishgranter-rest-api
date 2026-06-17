@@ -13,16 +13,13 @@ standard.
 ## Features of the API
 
 - Multi-user support, with user/password authentication.
-- Full CRUD support to manage user's [descriptive playlists](https://github.com/Wishgranter-project/descriptive-playlist-definition)
-- 
+- Full CRUD support to manage users' [descriptive playlists](https://github.com/Wishgranter-project/descriptive-playlist-definition)
 
 ## Important concepts
 
-Requests must use the apropriate methods, get, post, put, patch, delete.
-
-Responses must use apropriate codes, 200, 40*, 50* etc.
-
-The body of POST/PUT requests use either the form-data or urlencoded formats, 
+- Requests must use the apropriate methods, get, post, put, patch, delete.
+- Responses must use apropriate codes, 200, 40*, 50* etc.
+- The body of POST/PUT requests use either the form-data or urlencoded formats, 
 responses use json.
 
 ### Schema

@@ -46,7 +46,7 @@
                     "type": "string"
                 },
                 "required": true,
-                "example": "johnny-silverhand"
+                "example": "valery"
             },
             "playlistId": {
                 "name": "playlistId",
@@ -389,7 +389,8 @@
                     },
                     "year": {
                         "type": "integer",
-                        "description": "The year it was released."
+                        "description": "The year it was released.",
+                        "example": "1992"
                     },
                     "source": {
                         "type": "string",
@@ -398,7 +399,8 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "Unique identifier within the source."
+                        "description": "Unique identifier within the source.",
+                        "example": "22738"
                     }
                 }
             },
@@ -588,12 +590,43 @@
                                 "schema": {
                                     "properties": {
                                         "data": {
-                                            "type": "object"
+                                            "type": "object",
+                                            "properties": {
+                                                "Samurai": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                },
+                                                "Silverhand": {
+                                                    "type": "integer",
+                                                    "example": 6
+                                                },
+                                                "Cartesian Duelists": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "Lizzy Wizzy": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "Kerry Eurodine": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
                     }
                 }
             }
@@ -627,6 +660,15 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
                     }
                 }
             }
@@ -685,7 +727,7 @@
                                                                 "example": "Success."
                                                             },
                                                             "description": {
-                                                                "example": "A new playlist has been created."
+                                                                "example": "New playlist created."
                                                             }
                                                         }
                                                     }
@@ -700,11 +742,17 @@
                             }
                         }
                     },
-                    "400": {
-                        "$ref": "#/components/responses/invalidData"
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
                     },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
                     }
                 }
             },
@@ -757,8 +805,14 @@
                             }
                         }
                     },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
                     }
                 }
             }
@@ -881,6 +935,9 @@
                     "400": {
                         "$ref": "#/components/responses/invalidData"
                     },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
                     },
@@ -948,6 +1005,9 @@
                             }
                         }
                     },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
                     },
@@ -1005,6 +1065,9 @@
                             }
                         }
                     },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
                     },
@@ -1021,7 +1084,7 @@
                     "playlistItems"
                 ],
                 "summary": "Create new playlist item.",
-                "description": "Creates a new playlist item for the user's collection.",
+                "description": "Creates a new playlist item and adds it to the user's collection.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -1096,11 +1159,14 @@
                             }
                         }
                     },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
                     },
-                    "400": {
-                        "$ref": "#/components/responses/invalidData"
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
                     }
                 }
             },
@@ -1128,7 +1194,7 @@
                     },
                     {
                         "name": "playlistId",
-                        "description": "The ids of playlists to search for items.",
+                        "description": "The ids of playlists to search for items. If empty, all playlists in the user's collection will be subject to the search.",
                         "in": "query",
                         "schema": {
                             "type": "array",
@@ -1141,7 +1207,7 @@
                     },
                     {
                         "name": "title",
-                        "description": "Searh parameter to match against the item titles.",
+                        "description": "Search parameter to match against the items' title.",
                         "in": "query",
                         "schema": {
                             "type": "string"
@@ -1151,7 +1217,7 @@
                     },
                     {
                         "name": "artist",
-                        "description": "Searh parameter to match against the item artists.",
+                        "description": "Search parameter to match against the items' artists.",
                         "in": "query",
                         "schema": {
                             "type": "string"
@@ -1161,7 +1227,7 @@
                     },
                     {
                         "name": "genre",
-                        "description": "Searh parameter to match against the item genres.",
+                        "description": "Searh parameter to match against the items' genres.",
                         "in": "query",
                         "schema": {
                             "type": "string"
@@ -1171,7 +1237,7 @@
                     },
                     {
                         "name": "soundtrack",
-                        "description": "Searh parameter to match against the item soundtrack.",
+                        "description": "Searh parameter to match against the items' soundtracks.",
                         "in": "query",
                         "schema": {
                             "type": "string"
@@ -1206,8 +1272,14 @@
                             }
                         }
                     },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
                     }
                 }
             }
@@ -1219,7 +1291,7 @@
                     "playlistItems"
                 ],
                 "summary": "Retrieves a playlist item.",
-                "description": "Returns a single playlist item.",
+                "description": "Returns a single playlist item from the collection.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -1248,11 +1320,14 @@
                           }
                         }
                     },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
                     },
-                    "404": {
-                        "$ref": "#/components/responses/notFound"
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
                     }
                 }
             },
@@ -1333,6 +1408,9 @@
                     "400": {
                         "$ref": "#/components/responses/invalidData"
                     },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
                     },
@@ -1403,11 +1481,14 @@
                             }
                         }
                     },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
+                    },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
                     },
-                    "404": {
-                        "$ref": "#/components/responses/notFound"
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
                     }
                 }
             }
@@ -1589,8 +1670,8 @@
                             }
                         }
                     },
-                    "403": {
-                        "$ref": "#/components/responses/accessDenied"
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
                     }
                 }
             }
@@ -1640,6 +1721,15 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
                     }
                 }
             }
@@ -1698,6 +1788,15 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
                     }
                 }
             }
@@ -1781,6 +1880,12 @@
                     },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
                     }
                 }
             }

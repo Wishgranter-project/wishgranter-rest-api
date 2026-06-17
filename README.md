@@ -67,3 +67,7 @@ expect of a search result:
     ]
 }
 ```
+
+## Testing
+The repository include bruno collections to help test your implementation, 
+check the `ApiTests` directory.

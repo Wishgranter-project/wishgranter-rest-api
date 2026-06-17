@@ -5,14 +5,14 @@ meta {
 }
 
 post {
-  url: {{base_url}}/test/api/v1/users/adinan/collection/playlists
+  url: {{base_url}}/api/v1/users/adinan/collection/playlists
   body: multipartForm
   auth: inherit
 }
 
 body:multipart-form {
   title: test playlist
-  random: nonsense
+  random_property: nonsense
 }
 
 assert {

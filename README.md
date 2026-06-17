@@ -1,20 +1,19 @@
 # Wishgranter Rest API
 
-This repository specifies a web-based restful API to manage collections of 
-[descriptive playlists](https://github.com/Wishgranter-project/descriptive-playlist-definition).
-
-It uses the [Open API](https://learn.openapis.org/specification/docs) 
-standard.
+Here is defined the RESTful API for a web-based Description Player.
 
 This is part of the wider [Wishgranter project](https://github.com/Wishgranter-project).
 
 A web-based description player does not need to implement this API or any, but 
 this remains as an advisable standard to follow.
 
-## Features
+The API is defined using the [Open API](https://learn.openapis.org/specification/docs) 
+standard.
+
+## Features of the API
 
 - Multi-user support, with user/password authentication.
-- Full CRUD support to manage playlists.
+- Full CRUD support to manage user's [descriptive playlists](https://github.com/Wishgranter-project/descriptive-playlist-definition)
 - 
 
 ## Important concepts
@@ -23,7 +22,8 @@ Requests must use the apropriate methods, get, post, put, patch, delete.
 
 Responses must use apropriate codes, 200, 40*, 50* etc.
 
-The body of POST/PUT requests use either the form-data or urlencoded formats, responses use json.
+The body of POST/PUT requests use either the form-data or urlencoded formats, 
+responses use json.
 
 ### Schema
 All responses return an object encapsulating the information in three 
@@ -33,7 +33,8 @@ properties:
 - `meta`: Adjacent information about the `data`.
 - `messages`: Status messages, infos, warnings, errors, debug ...
 
-Each may be ommited entirely if there's no data to fill them with.
+**Observation**: None are obligatory, each may be ommited entirely if there's 
+no data to fill them with.
 
 As an example of what a typical response looks like, this is what you may 
 expect of a search result:

@@ -1,0 +1,20 @@
+tests {
+  const validate = require('./reusable-validation');
+  
+  test('Test that a json response will be returned', () => {
+    validate.jsonResponse(res);
+  });
+  
+  test('Test that the json schema matches expectations', () => {
+    validate.jsonSchema(res);
+  });
+  
+  test('Test that unauthenticated request are dealt with', () => {
+    validate.responseToUnauthenticatedRequest(res);
+  });
+  
+  test('Test that unauthorized request are dealt with', () => {
+    validate.responseToUnauthorizedRequest(res);
+  });
+  
+}

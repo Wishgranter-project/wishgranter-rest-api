@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "https://api.server.test/v1"
+            "url": "https://api.server.test"
         }
     ],
     "tags": [
@@ -85,6 +85,7 @@
                 "schema": {
                     "type": "integer"
                 },
+                "required": false,
                 "example": 1
             }
         },
@@ -1159,6 +1160,9 @@
                             }
                         }
                     },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
+                    },
                     "404": {
                         "$ref": "#/components/responses/notFound"
                     },
@@ -1227,7 +1231,7 @@
                     },
                     {
                         "name": "genre",
-                        "description": "Searh parameter to match against the items' genres.",
+                        "description": "Search parameter to match against the items' genres.",
                         "in": "query",
                         "schema": {
                             "type": "string"
@@ -1237,13 +1241,23 @@
                     },
                     {
                         "name": "soundtrack",
-                        "description": "Searh parameter to match against the items' soundtracks.",
+                        "description": "Search parameter to match against the items' soundtracks.",
                         "in": "query",
                         "schema": {
                             "type": "string"
                         },
                         "required": false,
                         "example": "Rock"
+                    },
+                    {
+                        "name": "orderBy",
+                        "description": "Property to order results by.",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": false,
+                        "example": "RAND(seed-goes here)"
                     }
                 ],
                 "responses": {
@@ -1348,9 +1362,6 @@
                         "$ref": "#/components/parameters/userId"
                     },
                     {
-                        "$ref": "#/components/parameters/playlistId"
-                    },
-                    {
                         "$ref": "#/components/parameters/itemUuid"
                     }
                 ],
@@ -1434,9 +1445,6 @@
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/userId"
-                    },
-                    {
-                        "$ref": "#/components/parameters/playlistId"
                     },
                     {
                         "$ref": "#/components/parameters/itemUuid"
@@ -1629,6 +1637,11 @@
                 "tags": [
                     "user"
                 ],
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
                 "summary": "Logout.",
                 "description": "Closes the current session.",
                 "responses": {
@@ -1683,7 +1696,7 @@
                     "discover"
                 ],
                 "summary": "Discover artists.",
-                "description": "DIscover new bands and artists.",
+                "description": "Discover new bands and artists.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -1693,7 +1706,7 @@
                     {
                         "name": "name",
                         "in": "query",
-                        "description": "Searh parameter, name of the artist or band",
+                        "description": "Search parameter, name of the artist or band",
                         "schema": {
                             "type": "string"
                         },
@@ -1751,7 +1764,7 @@
                     {
                         "name": "title",
                         "in": "query",
-                        "description": "Searh parameter, title of the album (optional).",
+                        "description": "Search parameter, title of the album (optional).",
                         "schema": {
                             "type": "string"
                         },
@@ -1818,7 +1831,7 @@
                     {
                         "name": "title",
                         "in": "query",
-                        "description": "Searh parameter, title of the album.",
+                        "description": "Search parameter, title of the album.",
                         "schema": {
                             "type": "string"
                         },

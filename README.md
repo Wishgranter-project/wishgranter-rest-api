@@ -8,7 +8,7 @@ A web-based description player does not need to implement this API or any, but
 this remains as an advisable standard to follow.
 
 The API is defined using the [Open API](https://learn.openapis.org/specification/docs) 
-standard.
+standard, see the [openapi.json](openapi.json).
 
 ## Features of the API
 
@@ -17,8 +17,8 @@ standard.
 
 ## Important concepts
 
-- Requests must use the apropriate methods, get, post, put, patch, delete.
-- Responses must use apropriate codes, 200, 40*, 50* etc.
+- Requests must use the appropriate methods, get, post, put, patch, delete.
+- Responses must use appropriate codes, 200, 40*, 50* etc.
 - The body of POST/PUT requests use either the form-data or urlencoded formats, 
 responses use json.
 
@@ -50,7 +50,7 @@ expect of a search result:
         {
             "type": "debug",
             "title": "Debug info",
-            "description": "Request fulfilled in 100 miliseconds."
+            "description": "Request fulfilled in 100 milliseconds."
         }
     ],
     "data": [
@@ -67,5 +67,8 @@ expect of a search result:
 ```
 
 ## Testing
-The repository include bruno collections to help test your implementation, 
-check the `ApiTests` directory.
+The repository include [Bruno](https://docs.usebruno.com/introduction/getting-started) 
+collections to help test your implementation, check the `ApiTests` directory.
+
+## License
+MIT

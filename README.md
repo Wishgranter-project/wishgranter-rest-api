@@ -5,7 +5,8 @@ Here is defined the RESTful API for a web-based Description Player.
 This is part of the wider [Wishgranter project](https://github.com/Wishgranter-project).
 
 A web-based description player does not need to implement this API or any, but 
-this remains as an advisable standard to follow.
+this remains as an advisable standard to follow. It would make easier to write 
+clients compatible with different servers.
 
 The API is defined using the [Open API](https://learn.openapis.org/specification/docs) 
 standard, see the [openapi.json](openapi.json).
@@ -15,15 +16,19 @@ standard, see the [openapi.json](openapi.json).
 - Multi-user support, with user/password authentication.
 - Full CRUD support to manage users' [descriptive playlists](https://github.com/Wishgranter-project/descriptive-playlist-definition)
 
+The repository include [Bruno](https://docs.usebruno.com/introduction/getting-started) 
+collections to help test your implementation, check the [ApiTests](ApiTests) 
+directory.
+
 ## Important concepts
 
 - Requests must use the appropriate methods, get, post, put, patch, delete.
 - Responses must use appropriate codes, 200, 40*, 50* etc.
-- The body of POST/PUT requests use either the form-data or urlencoded formats, 
-responses use json.
+- The body of POST/PUT/PATCH requests use either form-data or urlencoded 
+formats, responses use json.
 
 ### Schema
-All responses return an object encapsulating the information in three 
+All responses return an object encapsulating the information in one to three 
 properties:
 
 - `data`: The actual information we asked for.
@@ -33,8 +38,7 @@ properties:
 **Observation**: None are obligatory, each may be ommited entirely if there's 
 no data to fill them with.
 
-As an example of what a typical response looks like, this is what you may 
-expect of a search result:
+Example, this is what you may expect of a search result:
 
 ```json
 {
@@ -65,10 +69,6 @@ expect of a search result:
     ]
 }
 ```
-
-## Testing
-The repository include [Bruno](https://docs.usebruno.com/introduction/getting-started) 
-collections to help test your implementation, check the `ApiTests` directory.
 
 ## License
 MIT

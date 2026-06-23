@@ -1,0 +1,14 @@
+{
+  "name": "wishgranter-rest-api",
+  "version": "1.0.0",
+  "description": "Rest API",
+  "main": "index.js",
+  "scripts": {
+    "build": "./node_modules/@redocly/cli/bin/cli.js build-docs ./openapi.json -o docs/index.html"
+  },
+  "author": "Adinan Cenci <adinancenci@protonmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@redocly/cli": "^2.34.0"
+  }
+}

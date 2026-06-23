@@ -11,6 +11,8 @@ clients compatible with different servers.
 The API is defined using the [Open API](https://learn.openapis.org/specification/docs) 
 standard, see the [openapi.json](openapi.json).
 
+Human-friendly documentation available [here](https://wishgranter-project.github.io/wishgranter-rest-api/).
+
 ## Features of the API
 
 - Multi-user support, with user/password authentication.

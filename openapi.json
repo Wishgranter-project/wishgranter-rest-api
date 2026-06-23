@@ -1549,7 +1549,7 @@
                 "tags": [
                     "playlistItems"
                 ],
-                "summary": "Update playlist item.",
+                "summary": "Patches playlist item.",
                 "description": "Patches the specified playlist item. Unlike the PUT method, unspecified attributes will be left unchanged.",
                 "security": [
                     {

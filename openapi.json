@@ -28,6 +28,10 @@
             "description": "Everything about the users"
         },
         {
+            "name": "session",
+            "description": "Everything about sessions"
+        },
+        {
             "name": "discover",
             "description": "Discover new music"
         },
@@ -1725,11 +1729,56 @@
                 }
             }
         },
+        "/api/v1/users": {
+            "post": {
+                "operationId": "createUser",
+                "tags": [
+                    "user"
+                ],
+                "summary": "Register.",
+                "description": "Creates a new account.",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "mail": {
+                                        "type": "string",
+                                        "description": "E-mail address."
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "confirmPassword": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    }
+                }
+            }
+        },
         "/api/v1/session": {
             "post": {
                 "operationId": "login",
                 "tags": [
-                    "user"
+                    "session"
                 ],
                 "summary": "Login.",
                 "description": "Opens a new session.",
@@ -1800,7 +1849,7 @@
             "get": {
                 "operationId": "getSession",
                 "tags": [
-                    "user"
+                    "session"
                 ],
                 "security": [
                     {
@@ -1859,7 +1908,7 @@
             "delete": {
                 "operationId": "logout",
                 "tags": [
-                    "user"
+                    "session"
                 ],
                 "security": [
                     {

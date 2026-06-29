@@ -1743,8 +1743,9 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "name": {
-                                        "type": "string"
+                                    "username": {
+                                        "type": "string",
+                                        "description": "The username."
                                     },
                                     "mail": {
                                         "type": "string",
@@ -1762,6 +1763,61 @@
                     }
                 },
                 "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/baseMessage"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "example": "success"
+                                                            },
+                                                            "code": {
+                                                                "example": 201
+                                                            },
+                                                            "title": {
+                                                                "example": "Success."
+                                                            },
+                                                            "description": {
+                                                                "example": "Account created."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "valery"
+                                                },
+                                                "username": {
+                                                    "type": "string",
+                                                    "example": "Afterlife V"
+                                                },
+                                                "created": {
+                                                    "type": "integer",
+                                                    "example": 3379366800
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "400": {
                         "$ref": "#/components/responses/invalidData"
                     },
@@ -1770,6 +1826,65 @@
                     },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
+                    }
+                }
+            }
+        },
+        "/api/v1/users/{userId}": {
+            "get": {
+                "operationId": "getUser",
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get user.",
+                "description": "Returns information about a user.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "valery"
+                                                },
+                                                "username": {
+                                                    "type": "string",
+                                                    "example": "Afterlife V"
+                                                },
+                                                "created": {
+                                                    "type": "integer",
+                                                    "example": 3379366800
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
                     }
                 }
             }

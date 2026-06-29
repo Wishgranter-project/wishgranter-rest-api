@@ -26,8 +26,11 @@
 - [X] Retrieve session info.
 - [X] Close session.
 
-- ??? Create account ?
-- ??? Retrieve password ?
+- [X] Create account.
+- [X] Get account info.
+- [ ] Update account.
+- [ ] Delete account.
+- [ ] Retrieve password.
 
 - [X] Discover new artists.
 - [X] Discover new albums.

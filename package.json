@@ -1,8 +1,7 @@
 {
   "name": "wishgranter-rest-api",
   "version": "1.0.0",
-  "description": "Rest API",
-  "main": "index.js",
+  "description": "Restful API specification to manage descriptive playlists.",
   "scripts": {
     "build": "./node_modules/@redocly/cli/bin/cli.js build-docs ./openapi.json -o docs/index.html"
   },

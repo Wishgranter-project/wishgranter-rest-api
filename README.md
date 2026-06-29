@@ -1,6 +1,6 @@
 # Wishgranter Rest API
 
-Here is defined the RESTful API for a web-based Description Player.
+Here is defined the RESTful API for a web-based Descriptive Player.
 
 This is part of the wider [Wishgranter project](https://github.com/Wishgranter-project).
 
@@ -37,7 +37,7 @@ properties:
 - `meta`: Adjacent information about the `data`.
 - `messages`: Status messages, infos, warnings, errors, debug ...
 
-**Observation**: None are obligatory, each may be ommited entirely if there's 
+**Observation**: None are obligatory, each may be ommitted entirely if there's 
 no data to fill them with.
 
 Example, this is what you may expect of a search result:

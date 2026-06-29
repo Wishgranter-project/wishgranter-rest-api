@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "https://api.server.test"
+            "url": "https://descriptive-player-example.com"
         }
     ],
     "tags": [
@@ -499,7 +499,7 @@
                     "src": {
                         "type": "string",
                         "description": "Absolute URL to a media resource, a file.",
-                        "example": "https://api.server.test/local-files/music.mp3"
+                        "example": "https://descriptive-player-example.com/local-files/music.mp3"
                     }
                 }
             }
@@ -638,14 +638,14 @@
                             }
                         }
                     },
-                    "404": {
-                        "$ref": "#/components/responses/notFound"
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
                     },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
                     },
-                    "401": {
-                        "$ref": "#/components/responses/unauthenticated"
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
                     }
                 }
             }
@@ -680,11 +680,11 @@
                             }
                         }
                     },
-                    "403": {
-                        "$ref": "#/components/responses/accessDenied"
-                    },
                     "401": {
                         "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
                     },
                     "404": {
                         "$ref": "#/components/responses/notFound"
@@ -754,14 +754,14 @@
                             }
                         }
                     },
-                    "404": {
-                        "$ref": "#/components/responses/notFound"
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
                     },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
                     },
-                    "401": {
-                        "$ref": "#/components/responses/unauthenticated"
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
                     }
                 }
             },
@@ -1112,7 +1112,7 @@
                                                                 "example": "Deleted."
                                                             },
                                                             "description": {
-                                                                "example": "Playlist reoved."
+                                                                "example": "Playlist removed."
                                                             }
                                                         }
                                                     }
@@ -1425,14 +1425,14 @@
                     "400": {
                         "$ref": "#/components/responses/invalidData"
                     },
-                    "404": {
-                        "$ref": "#/components/responses/notFound"
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
                     },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
                     },
-                    "401": {
-                        "$ref": "#/components/responses/unauthenticated"
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
                     }
                 }
             }
@@ -1713,14 +1713,14 @@
                             }
                         }
                     },
-                    "404": {
-                        "$ref": "#/components/responses/notFound"
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
                     },
                     "403": {
                         "$ref": "#/components/responses/accessDenied"
                     },
-                    "401": {
-                        "$ref": "#/components/responses/unauthenticated"
+                    "404": {
+                        "$ref": "#/components/responses/notFound"
                     }
                 }
             }
@@ -1959,14 +1959,14 @@
                             }
                         }
                     },
-                    "403": {
-                        "$ref": "#/components/responses/accessDenied"
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
                     },
                     "401": {
                         "$ref": "#/components/responses/unauthenticated"
                     },
-                    "400": {
-                        "$ref": "#/components/responses/invalidData"
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
                     }
                 }
             }

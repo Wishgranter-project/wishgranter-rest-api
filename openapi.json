@@ -220,12 +220,12 @@
                 "properties": {
                     "title": {
                         "type": "string",
-                        "description": "The human-readable title of the playlist.",
+                        "description": "The title of the playlist, a human-readable string.",
                         "example": "Samurai's all timers"
                     },
                     "description": {
                         "type": "string",
-                        "description": "The human-readable description.",
+                        "description": "A description of the playlist, a human-readable string.",
                         "example": "The best songs from Samurai."
                     }
                 }
@@ -313,11 +313,6 @@
                                 "type": "string",
                                 "description": "An unique identifier.",
                                 "example": "6a890f6e-e03f-4bda-9b09-42aac95917f0"
-                            },
-                            "xxxOriginal": {
-                                "type": "string",
-                                "description": "The UUID of the original item, marking this one as a copy. It essentially allows us to have the same music in multiple playlist. Changes in one should be reflected in the others.",
-                                "example": "f448de5e-5f04-4d1b-9ce6-0a308ca2c462"
                             }
                         }
                     }
@@ -334,7 +329,7 @@
                         "properties": {
                             "xxxOriginal": {
                                 "type": "string",
-                                "description": "The UUID of the original item, marking this one as a copy. It essentially allows us to have the same music in multiple playlist. Changes in one should be reflected in the others.",
+                                "description": "Custom property, the UUID of the original item, marking this one as a copy. This property links two or more items (not necessaraly in the same playlist) together, it essentially allows us to have the same music in multiple playlist. Changes in one should be reflected in the others.",
                                 "example": "f448de5e-5f04-4d1b-9ce6-0a308ca2c462"
                             }
                         }
@@ -434,7 +429,7 @@
                             "resultsCount": {
                                 "type": "integer",
                                 "description": "The total number of items to be listed.",
-                                "example": 100
+                                "example": 82
                             },
                             "itemsPerPage": {
                                 "type": "integer",
@@ -444,17 +439,17 @@
                             "pagesCount": {
                                 "type": "integer",
                                 "description": "How many pages there are.",
-                                "example": 10
+                                "example": 9
                             },
                             "currentPage": {
                                 "type": "integer",
                                 "description": "The current page.",
-                                "example": 1
+                                "example": 9
                             },
                             "currentPageCount": {
                                 "type": "integer",
                                 "description": "Number of items within this set, this page. Naturally equal or less than itemsPerPage",
-                                "example": 10
+                                "example": 2
                             }
                         }
                     },
@@ -704,7 +699,7 @@
                     "playlists"
                 ],
                 "summary": "List playlists.",
-                "description": "Returns a list of playlists in the user's collection.",
+                "description": "Returns a list of the playlists in the user's collection.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -738,7 +733,19 @@
                                                 "type": "array",
                                                 "items": {
                                                     "$ref": "#/components/schemas/playlist"
-                                                }
+                                                },
+                                                "example": [
+                                                    {
+                                                        "id": "samurais-best",
+                                                        "title": "Samurai's all timers",
+                                                        "description": "The best songs from Samurai."
+                                                    },
+                                                    {
+                                                        "id": "night-city-summer-hits",
+                                                        "title": "Night city summer hits",
+                                                        "description": "Best hits from this side of Pacifica"
+                                                    }
+                                                ]
                                             }
                                         }
                                       }
@@ -894,7 +901,7 @@
                     "playlists"
                 ],
                 "summary": "Update playlist.",
-                "description": "Updates the specified playlist in the user's collection.",
+                "description": "Updates a playlist in the user's collection.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -979,7 +986,7 @@
                     "playlists"
                 ],
                 "summary": "Patches a playlist.",
-                "description": "Patches the specified playlist in the user's collection. Unlike the PUT method, unspecified attributes will be left unchanged.",
+                "description": "Patches a playlist in the user's collection. Unlike the PUT method, unspecified attributes will be left unchanged.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -1064,7 +1071,7 @@
                     "playlists"
                 ],
                 "summary": "Delete playlist.",
-                "description": "Deletes the specified playlist in the user's collection.",
+                "description": "Deletes a playlist in the user's collection.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -1136,7 +1143,7 @@
                     "playlists"
                 ],
                 "summary": "Download playlist.",
-                "description": "Downloads the specified playlist in the user's collection.",
+                "description": "Downloads a playlist in the user's collection.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -1293,7 +1300,25 @@
                                                 "type": "array",
                                                 "items": {
                                                     "$ref": "#/components/schemas/playlistItem"
-                                                }
+                                                },
+                                                "example": [
+                                                    {
+                                                        "uuid": "6a890f6e-e03f-4bda-9b09-42aac95917f0",
+                                                        "title": "Black dog",
+                                                        "artist": ["Johnny Silverhand"],
+                                                        "featuring": ["Kerry Eurodine"],
+                                                        "album": "Never gonna fade away",
+                                                        "soundtrack": ["Cyberpunk 2077"],
+                                                        "genre": ["Rock"]
+                                                    },
+                                                    {
+                                                        "uuid": "07b9ea54-38bc-4cb0-8d46-53eb0feb64f6",
+                                                        "title": "Friday Night Fire Fight",
+                                                        "artist": ["Rubicones"],
+                                                        "soundtrack": ["Cyberpunk 2077"],
+                                                        "genre": ["Rock"]
+                                                    }
+                                                ]
                                             }
                                         }
                                       }
@@ -1465,7 +1490,7 @@
                     "playlistItems"
                 ],
                 "summary": "Update playlist item.",
-                "description": "Updates the specified playlist item.",
+                "description": "Updates the playlist item.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -1550,7 +1575,7 @@
                     "playlistItems"
                 ],
                 "summary": "Patches playlist item.",
-                "description": "Patches the specified playlist item. Unlike the PUT method, unspecified attributes will be left unchanged.",
+                "description": "Patches the playlist item. Unlike the PUT method, unspecified attributes will be left unchanged.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -1635,7 +1660,7 @@
                     "playlistItems"
                 ],
                 "summary": "Delete playlist item.",
-                "description": "Deletes the specified playlist item.",
+                "description": "Deletes the playlist item.",
                 "security": [
                     {
                         "cookieAuthentication": []

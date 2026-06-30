@@ -12,6 +12,14 @@
     ],
     "tags": [
         {
+            "name": "user",
+            "description": "Everything about the users"
+        },
+        {
+            "name": "session",
+            "description": "Everything about sessions"
+        },
+        {
             "name": "collection",
             "description": "Everything about your collection"
         },
@@ -22,14 +30,6 @@
         {
             "name": "playlistItems",
             "description": "Everything about your playlist items"
-        },
-        {
-            "name": "user",
-            "description": "Everything about the users"
-        },
-        {
-            "name": "session",
-            "description": "Everything about sessions"
         },
         {
             "name": "discover",
@@ -1836,7 +1836,7 @@
                 "tags": [
                     "user"
                 ],
-                "summary": "Get user.",
+                "summary": "Get account.",
                 "description": "Returns information about a user.",
                 "security": [
                     {
@@ -1885,6 +1885,182 @@
                     },
                     "404": {
                         "$ref": "#/components/responses/notFound"
+                    }
+                }
+            },
+            "put": {
+                "operationId": "updateUser",
+                "tags": [
+                    "user"
+                ],
+                "summary": "Update account.",
+                "description": "Updates a user's information.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "description": "The username."
+                                    },
+                                    "mail": {
+                                        "type": "string",
+                                        "description": "E-mail address."
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "confirmPassword": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/baseMessage"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "example": "success"
+                                                            },
+                                                            "code": {
+                                                                "example": 200
+                                                            },
+                                                            "title": {
+                                                                "example": "Success."
+                                                            },
+                                                            "description": {
+                                                                "example": "Account updated."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "valery"
+                                                },
+                                                "username": {
+                                                    "type": "string",
+                                                    "example": "Afterlife V"
+                                                },
+                                                "created": {
+                                                    "type": "integer",
+                                                    "example": 3379366800
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "deleteUser",
+                "tags": [
+                    "user"
+                ],
+                "summary": "Delete account.",
+                "description": "Deletes the user.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/baseMessage"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "example": "success"
+                                                            },
+                                                            "code": {
+                                                                "example": 200
+                                                            },
+                                                            "title": {
+                                                                "example": "Success."
+                                                            },
+                                                            "description": {
+                                                                "example": "Account deleted."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
                     }
                 }
             }

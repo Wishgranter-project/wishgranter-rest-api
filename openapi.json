@@ -322,24 +322,6 @@
                     }
                 ]
             },
-            "playlistItemCopy": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/playlistItem"
-                    },
-                    {
-                        "type": "object",
-                        "description": "A playable item saved within a playlist.",
-                        "properties": {
-                            "xxxOriginal": {
-                                "type": "string",
-                                "description": "Custom property, the UUID of the original item, marking this one as a copy. This property links two or more items (not necessaraly in the same playlist) together, it essentially allows us to have the same music in multiple playlist. Changes in one should be reflected in the others.",
-                                "example": "f448de5e-5f04-4d1b-9ce6-0a308ca2c462"
-                            }
-                        }
-                    }
-                ]
-            },
             "session": {
                 "type": "object",
                 "description": "Session object.",

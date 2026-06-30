@@ -1,0 +1,16 @@
+meta {
+  name: GET USER
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/v1/users/adinan
+  body: multipartForm
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

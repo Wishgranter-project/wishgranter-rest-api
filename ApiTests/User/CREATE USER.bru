@@ -1,0 +1,23 @@
+meta {
+  name: CREATE USER
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/v1/users
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  username: 
+  mail: 
+  password: 
+  confirmPassword: 
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

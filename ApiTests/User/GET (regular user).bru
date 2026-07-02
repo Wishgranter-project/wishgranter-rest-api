@@ -1,0 +1,16 @@
+meta {
+  name: GET (regular user)
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/api/v1/users/berg
+  body: multipartForm
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

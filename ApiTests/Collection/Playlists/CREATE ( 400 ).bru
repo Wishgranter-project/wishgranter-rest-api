@@ -1,0 +1,25 @@
+meta {
+  name: CREATE ( 400 )
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/v1/users/adinan/collection/playlists
+  body: multipartForm
+  auth: inherit
+}
+
+assert {
+  res.status: eq 400
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Example of a failed attempt to create a new playlist.
+  
+}

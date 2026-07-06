@@ -1,0 +1,31 @@
+meta {
+  name: PATCH
+  type: http
+  seq: 18
+}
+
+patch {
+  url: {{base_url}}/api/v1/users/adinan/collection/playlists/music-country
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  title: Country ( updated )
+}
+
+assert {
+  res.status: eq 200
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  Given a set of properties, the endpoint updates the playlist accordingly.
+  
+  Other properties the playlist may have are left unchanged.
+  
+}

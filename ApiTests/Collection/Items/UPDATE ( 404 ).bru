@@ -1,0 +1,25 @@
+meta {
+  name: UPDATE ( 404 )
+  type: http
+  seq: 14
+}
+
+put {
+  url: {{base_url}}/api/v1/users/regular-user/collection/items/6666
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  artist: Valanja
+  title: Nek Militema ( updated )
+}
+
+assert {
+  res.status: eq 404
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

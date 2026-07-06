@@ -1,0 +1,23 @@
+meta {
+  name: UPDATE (admin user)
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{base_url}}/api/v1/users/admin-user
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  username: New Admin Username
+  existingPassword: 123
+  password: akArPmdW8sZg3e
+  confirmPassword: akArPmdW8sZg3e
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

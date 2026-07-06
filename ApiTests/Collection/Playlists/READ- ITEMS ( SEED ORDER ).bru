@@ -1,0 +1,24 @@
+meta {
+  name: READ: ITEMS ( SEED ORDER )
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{base_url}}/api/v1/users/adinan/collection/playlists/music-metal/items?orderBy=RAND(french-fries)
+  body: none
+  auth: inherit
+}
+
+params:query {
+  orderBy: RAND(french-fries)
+}
+
+assert {
+  res.status: eq 200
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

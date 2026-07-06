@@ -1,0 +1,20 @@
+meta {
+  name: DELETE ( 404 )
+  type: http
+  seq: 17
+}
+
+delete {
+  url: {{base_url}}/api/v1/users/regular-user/collection/items/666
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 404
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

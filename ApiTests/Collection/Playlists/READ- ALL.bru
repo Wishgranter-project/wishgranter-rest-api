@@ -1,0 +1,20 @@
+meta {
+  name: READ: ALL
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base_url}}/api/v1/users/adinan/collection/playlists
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

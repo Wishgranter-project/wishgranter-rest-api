@@ -1,0 +1,24 @@
+meta {
+  name: READ: INDIVIDUAL ( DOWNLOAD )
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{base_url}}/api/v1/users/adinan/collection/playlists/music-metal
+  body: none
+  auth: inherit
+}
+
+headers {
+  Accept: application/jsonl
+}
+
+assert {
+  res.status: eq 200
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

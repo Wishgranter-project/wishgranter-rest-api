@@ -331,7 +331,7 @@
                         "description": "The user's id within the system",
                         "example": "johnny-silverhand"
                     },
-                    "name": {
+                    "username": {
                         "type": "string",
                         "description": "The user's name.",
                         "example": "Johnny Silverhand"

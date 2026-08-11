@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Restful API specification to manage descriptive playlists.",
   "scripts": {
-    "build": "./node_modules/@redocly/cli/bin/cli.js build-docs ./openapi.json -o docs/index.html"
+    "build": "./node_modules/@redocly/cli/bin/cli.js build-docs ./openapi.json -o docs/index.html",
+    "compile": "npm run build"
   },
   "author": "Adinan Cenci <adinancenci@protonmail.com>",
   "license": "MIT",

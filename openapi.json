@@ -1900,12 +1900,6 @@
                                     "mail": {
                                         "type": "string",
                                         "description": "E-mail address."
-                                    },
-                                    "password": {
-                                        "type": "string"
-                                    },
-                                    "confirmPassword": {
-                                        "type": "string"
                                     }
                                 }
                             }
@@ -2024,6 +2018,98 @@
                                                             },
                                                             "description": {
                                                                 "example": "Account deleted."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    }
+                }
+            }
+        },
+        "/api/v1/users/{userId}/password": {
+            "post": {
+                "operationId": "updateUserPassword",
+                "tags": [
+                    "user"
+                ],
+                "summary": "Update password.",
+                "description": "Updates the user's password.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "currentPassword": {
+                                        "type": "string",
+                                        "description": "The user's current password."
+                                    },
+                                    "newPassword": {
+                                        "type": "string",
+                                        "description": "The new password."
+                                    },
+                                    "confirmPassword": {
+                                        "type": "string",
+                                        "description": "Confirmation of the new password."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/baseMessage"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "example": "success"
+                                                            },
+                                                            "code": {
+                                                                "example": 200
+                                                            },
+                                                            "title": {
+                                                                "example": "Success."
+                                                            },
+                                                            "description": {
+                                                                "example": "Password updated."
                                                             }
                                                         }
                                                     }

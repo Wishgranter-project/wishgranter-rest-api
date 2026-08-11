@@ -28,7 +28,7 @@
 
 - [X] Create account.
 - [X] Get account info.
-- [ ] Update account.
+- [X] Update account.
 - [ ] Delete account.
 - [ ] Retrieve password.
 

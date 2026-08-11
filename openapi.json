@@ -1972,73 +1972,6 @@
                         "$ref": "#/components/responses/accessDenied"
                     }
                 }
-            },
-            "delete": {
-                "operationId": "deleteUser",
-                "tags": [
-                    "user"
-                ],
-                "summary": "Delete account.",
-                "description": "Deletes the user.",
-                "security": [
-                    {
-                        "cookieAuthentication": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/userId"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "messages": {
-                                            "type": "array",
-                                            "items": {
-                                                "allOf": [
-                                                    {
-                                                        "$ref": "#/components/schemas/baseMessage"
-                                                    },
-                                                    {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "type": {
-                                                                "example": "success"
-                                                            },
-                                                            "code": {
-                                                                "example": 200
-                                                            },
-                                                            "title": {
-                                                                "example": "Success."
-                                                            },
-                                                            "description": {
-                                                                "example": "Account deleted."
-                                                            }
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/invalidData"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/unauthenticated"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/accessDenied"
-                    }
-                }
             }
         },
         "/api/v1/users/{userId}/password": {
@@ -2110,6 +2043,94 @@
                                                             },
                                                             "description": {
                                                                 "example": "Password updated."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    }
+                }
+            }
+        },
+        "/api/v1/users/{userId}/delete": {
+            "post": {
+                "operationId": "deleteUser",
+                "tags": [
+                    "user"
+                ],
+                "summary": "Delete account.",
+                "description": "Deletes the user. The password is required to confirm the deletion.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "password": {
+                                        "type": "string",
+                                        "description": "The user's password, to confirm the deletion."
+                                    },
+                                    "confirmPassword": {
+                                        "type": "string",
+                                        "description": "Confirmation of the password."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/baseMessage"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "example": "success"
+                                                            },
+                                                            "code": {
+                                                                "example": 200
+                                                            },
+                                                            "title": {
+                                                                "example": "Success."
+                                                            },
+                                                            "description": {
+                                                                "example": "Account deleted."
                                                             }
                                                         }
                                                     }

@@ -29,7 +29,7 @@
 - [X] Create account.
 - [X] Get account info.
 - [X] Update account.
-- [ ] Delete account.
+- [X] Delete account.
 - [ ] Retrieve password.
 
 - [X] Discover new artists.

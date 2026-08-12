@@ -30,7 +30,7 @@
 - [X] Get account info.
 - [X] Update account.
 - [X] Delete account.
-- [ ] Retrieve password.
+- [X] Retrieve password.
 
 - [X] Discover new artists.
 - [X] Discover new albums.

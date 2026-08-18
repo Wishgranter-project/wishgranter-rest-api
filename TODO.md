@@ -37,3 +37,8 @@
 - [X] Retrieve tracks from a single album.
 
 - [X] Retrieve sources to play a single music.
+
+
+- [ ] Improve search queries.
+      Consider: https://docs.strapi.io/cms/api/rest/filters
+                https://www.moesif.com/blog/technical/api-design/REST-API-Design-Filtering-Sorting-and-Pagination/

@@ -1216,6 +1216,47 @@
                         "$ref": "#/components/parameters/page"
                     },
                     {
+                        "name": "filters",
+                        "description": "Structured query parameter, a nested array of values indexed by conditions and keyed by comparison and logical operators.",
+                        "in": "query",
+                        "schema": {
+                            "type": "object"
+                        },
+                        "required": false,
+                        "example": {
+                            "$or": [
+                                {
+                                    "artist": {
+                                        "$eq": "Samurai"
+                                    }
+                                },
+                                {
+                                    "artist": {
+                                        "$contains": "Silverhand"
+                                    }
+                                },
+                                {
+                                    "artist": {
+                                        "$eq": "Kerry Eurodyne"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "description": "An sequential array of parameters to sort the items.",
+                        "in": "query",
+                        "schema": {
+                          "type": "array",
+                          "items": {
+                              "type": "string"
+                            }
+                        },
+                        "required": false,
+                        "example": ["title:asc", "artist:desc", "rand:seed-goes-here"]
+                    },
+                    {
                         "name": "playlistId",
                         "description": "The ids of playlists to search for items. If empty, all playlists in the user's collection will be subject to the search.",
                         "in": "query",
@@ -1226,7 +1267,8 @@
                             }
                         },
                         "required": false,
-                        "example": ["samurais-best", "night-city-summer-hits"]
+                        "example": ["samurais-best", "night-city-summer-hits"],
+                        "deprecated": true
                     },
                     {
                         "name": "title",
@@ -1236,7 +1278,8 @@
                             "type": "string"
                         },
                         "required": false,
-                        "example": "Black Dog"
+                        "example": "Black Dog",
+                        "deprecated": true
                     },
                     {
                         "name": "artist",
@@ -1246,7 +1289,8 @@
                             "type": "string"
                         },
                         "required": false,
-                        "example": "Johnny Silverhand"
+                        "example": "Johnny Silverhand",
+                        "deprecated": true
                     },
                     {
                         "name": "genre",
@@ -1256,7 +1300,8 @@
                             "type": "string"
                         },
                         "required": false,
-                        "example": "Rock"
+                        "example": "Rock",
+                        "deprecated": true
                     },
                     {
                         "name": "soundtrack",
@@ -1266,7 +1311,8 @@
                             "type": "string"
                         },
                         "required": false,
-                        "example": "Rock"
+                        "example": "Rock",
+                        "deprecated": true
                     },
                     {
                         "name": "orderBy",
@@ -1276,7 +1322,8 @@
                             "type": "string"
                         },
                         "required": false,
-                        "example": "RAND(seed-goes-here)"
+                        "example": "RAND(seed-goes-here)",
+                        "deprecated": true
                     }
                 ],
                 "responses": {

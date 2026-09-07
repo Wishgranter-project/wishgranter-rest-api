@@ -332,6 +332,142 @@
                     }
                 ]
             },
+            "playlistItemFilter": {
+                "type": "object",
+                "description": "A structured filter used to narrow down the playlist items returned by the list operation. Inspired by the Strapi REST API filters (https://docs.strapi.io/cms/api/rest/filters), it is a nested object of fields keyed by comparison operators and combined with logical operators.",
+                "additionalProperties": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/filterComparison"
+                        },
+                        {
+                            "$ref": "#/components/schemas/filterConditionGroups"
+                        }
+                    ]
+                },
+                "example": {
+                    "$or": [
+                        {
+                            "artist": {
+                                "$eq": "Samurai"
+                            }
+                        },
+                        {
+                            "artist": {
+                                "$contains": "Silverhand"
+                            }
+                        },
+                        {
+                            "artist": {
+                                "$eq": "Kerry Eurodyne"
+                            }
+                        }
+                    ]
+                }
+            },
+            "filterComparison": {
+                "type": "object",
+                "description": "A comparison applied to a single field. Keys are comparison operators, values are the operand(s). Field keys that can be filtered on: title, artist, featuring, album, soundtrack, genre, uuid.",
+                "additionalProperties": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/filterComparisonOperator"
+                        }
+                    ]
+                },
+                "example": {
+                    "title": {
+                        "$contains": "Black dog"
+                    }
+                }
+            },
+            "filterConditionGroups": {
+                "type": "object",
+                "description": "A logical combination of filters. The value is an array of filter objects, each of which may itself contain comparison or logical operators, allowing arbitrary nesting.",
+                "properties": {
+                    "$and": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/playlistItemFilter"
+                        }
+                    },
+                    "$or": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/playlistItemFilter"
+                        }
+                    }
+                }
+            },
+            "filterComparisonOperator": {
+                "type": "object",
+                "description": "Operators taking a single scalar value.",
+                "properties": {
+                    "$eq": {
+                        "description": "Equal.",
+                        "type": "string"
+                    },
+                    "$ne": {
+                        "description": "Not equal.",
+                        "type": "string"
+                    },
+                    "$contains": {
+                        "description": "Contains the value.",
+                        "type": "string"
+                    },
+                    "$notContains": {
+                        "description": "Does not contain the value.",
+                        "type": "string"
+                    },
+                    "$gt": {
+                        "description": "Greater than.",
+                        "type": "number"
+                    },
+                    "$gte": {
+                        "description": "Greater than or equal.",
+                        "type": "number"
+                    },
+                    "$lt": {
+                        "description": "Less than.",
+                        "type": "number"
+                    },
+                    "$lte": {
+                        "description": "Less than or equal.",
+                        "type": "number"
+                    },
+                    "$null": {
+                        "description": "Value is null.",
+                        "type": "boolean"
+                    },
+                    "$notNull": {
+                        "description": "Value is not null.",
+                        "type": "boolean"
+                    },
+                    "$in": {
+                        "description": "Value is included in the given array.",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "$notIn": {
+                        "description": "Value is not included in the given array.",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "$between": {
+                        "description": "Value is between the two given bounds (inclusive).",
+                        "type": "array",
+                        "minItems": 2,
+                        "maxItems": 2,
+                        "items": {
+                            "type": "number"
+                        }
+                    }
+                }
+            },
             "session": {
                 "type": "object",
                 "description": "Session object.",
@@ -1217,31 +1353,12 @@
                     },
                     {
                         "name": "filters",
-                        "description": "Structured query parameter, a nested array of values indexed by conditions and keyed by comparison and logical operators.",
+                        "description": "Structured filter to narrow down the results, a nested array of values indexed by conditions and keyed by comparison and logical operators, inspired by the Strapi REST API filters.\n\nFilterable fields: playlistId, title, artist, featuring, album, soundtrack, genre and xxxCustomProperties.\n\nComparison operators: $eq, $ne, $contains, $notContains, $gt, $gte, $lt, $lte, $in, $notIn, $between, $null, $notNull.\n\nLogical operators: $and, $or.\n\nAn object keyed by a field name applies a comparison to that field:\n{\"title\": {\"$contains\": \"Black\"}}.\n\nLogical operators combine sub-filters in an array and can be nested arbitrarily:\n{\"$and\": [{\"artist\": {\"$eq\": \"Samurai\"}}, {\"$or\": [{\"genre\": {\"$contains\": \"Rock\"}}, {\"genre\": {\"$contains\": \"Jazz\"}}]}]}.\n\nMultiple filter objects at the same level are implicitly combined with $and.\n\nFilterable fields that take multiple values (artist, featuring, soundtrack, genre) can be matched with $contains to test for a single value. The object is serialised as nested query parameters, e.g.\n filters[$or][0][artist][$eq]=Samurai&filters[$or][1][artist][$contains]=Silverhand.",
                         "in": "query",
                         "schema": {
-                            "type": "object"
+                            "$ref": "#/components/schemas/playlistItemFilter"
                         },
-                        "required": false,
-                        "example": {
-                            "$or": [
-                                {
-                                    "artist": {
-                                        "$eq": "Samurai"
-                                    }
-                                },
-                                {
-                                    "artist": {
-                                        "$contains": "Silverhand"
-                                    }
-                                },
-                                {
-                                    "artist": {
-                                        "$eq": "Kerry Eurodyne"
-                                    }
-                                }
-                            ]
-                        }
+                        "required": false
                     },
                     {
                         "name": "sort",

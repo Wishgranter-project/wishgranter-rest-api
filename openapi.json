@@ -20,6 +20,10 @@
             "description": "Everything about sessions"
         },
         {
+            "name": "confirmation",
+            "description": "Confirm sensitive actions"
+        },
+        {
             "name": "collection",
             "description": "Everything about your collection"
         },
@@ -101,6 +105,16 @@
                 },
                 "required": true,
                 "example": "e8d95130-491d-4f46-a9bc-72c5d2a5f511"
+            },
+            "confirmationToken": {
+                "name": "X-Confirmation-Token",
+                "description": "A short-lived, single-use token issued by the confirmation endpoint that authorizes a sensitive action.",
+                "in": "header",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true,
+                "example": "7c1f9b2e-4a6d-47e0-9f31-2b8c5d0a6e94"
             }
         },
         "schemas": {
@@ -486,6 +500,27 @@
                         "type": "number",
                         "description": "Timestamp",
                         "example": "1692536400"
+                    }
+                }
+            },
+            "confirmation": {
+                "type": "object",
+                "description": "A short-lived, single-use token that authorizes a sensitive action. It is generated once the user has confirmed their identity for that action.",
+                "properties": {
+                    "action": {
+                        "type": "string",
+                        "description": "The action the token authorizes.",
+                        "example": "deleteUser"
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "The token to be sent as the X-Confirmation-Token header in the subsequent request.",
+                        "example": "7c1f9b2e-4a6d-47e0-9f31-2b8c5d0a6e94"
+                    },
+                    "expiration": {
+                        "type": "number",
+                        "description": "Timestamp after which the token is no longer accepted.",
+                        "example": 1692536400
                     }
                 }
             },
@@ -1993,7 +2028,7 @@
                     "user"
                 ],
                 "summary": "Get account.",
-                "description": "Returns information about a user.",
+                "description": "Returns information about the user.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -2050,7 +2085,7 @@
                     "user"
                 ],
                 "summary": "Update account.",
-                "description": "Updates a user's information.",
+                "description": "Updates the user's account.",
                 "security": [
                     {
                         "cookieAuthentication": []
@@ -2129,6 +2164,76 @@
                                                     "type": "integer",
                                                     "example": 3379366800
                                                 }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "deleteUser",
+                "tags": [
+                    "user"
+                ],
+                "summary": "Delete account.",
+                "description": "Deletes the user. It must carry a valid X-Confirmation-Token header, obtained from the confirmation endpoint, to prove that the deletion was intentional.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/confirmationToken"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/baseMessage"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "example": "success"
+                                                            },
+                                                            "code": {
+                                                                "example": 200
+                                                            },
+                                                            "title": {
+                                                                "example": "Success."
+                                                            },
+                                                            "description": {
+                                                                "example": "Account deleted."
+                                                            }
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         }
                                     }
@@ -2240,22 +2345,17 @@
                 }
             }
         },
-        "/api/v1/users/{userId}/delete": {
+        "/api/v1/confirmation": {
             "post": {
-                "operationId": "deleteUser",
+                "operationId": "confirmAction",
                 "tags": [
-                    "user"
+                    "confirmation"
                 ],
-                "summary": "Delete account.",
-                "description": "Deletes the user. The password is required to confirm the deletion.",
+                "summary": "Confirm an action.",
+                "description": "Confirms the user's intention to execute a sensitive action and issues a short-lived, single-use token. The token must then be sent as the X-Confirmation-Token header in the request that will perform the action.",
                 "security": [
                     {
                         "cookieAuthentication": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/userId"
                     }
                 ],
                 "requestBody": {
@@ -2264,13 +2364,18 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
+                                    "action": {
+                                        "type": "string",
+                                        "description": "The action to confirm.",
+                                        "example": "deleteUser"
+                                    },
                                     "password": {
                                         "type": "string",
-                                        "description": "The user's password, to confirm the deletion."
+                                        "description": "The user's password."
                                     },
                                     "confirmPassword": {
                                         "type": "string",
-                                        "description": "Confirmation of the password."
+                                        "description": "Confirm the password."
                                     }
                                 }
                             }
@@ -2304,12 +2409,15 @@
                                                                 "example": "Success."
                                                             },
                                                             "description": {
-                                                                "example": "Account deleted."
+                                                                "example": "Action confirmed."
                                                             }
                                                         }
                                                     }
                                                 ]
                                             }
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/confirmation"
                                         }
                                     }
                                 }

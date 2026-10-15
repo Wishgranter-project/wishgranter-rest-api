@@ -37,8 +37,17 @@
 - [X] Retrieve tracks from a single album.
 
 - [X] Retrieve sources to play a single music.
+- [X] Improve search queries.
 
 
-- [ ] Improve search queries.
-      Consider: https://docs.strapi.io/cms/api/rest/filters
-                https://www.moesif.com/blog/technical/api-design/REST-API-Design-Filtering-Sorting-and-Pagination/
+## Reading material
+
+### Search queries
+https://docs.strapi.io/cms/api/rest/filters
+https://www.moesif.com/blog/technical/api-design/REST-API-Design-Filtering-Sorting-and-Pagination/
+
+### Polular APIs
+https://ampache.org/rest/
+https://docs.funkwhale.audio/specs/collections/index.html
+https://subsonic.org/pages/api.jsp
+https://opensubsonic.netlify.app/

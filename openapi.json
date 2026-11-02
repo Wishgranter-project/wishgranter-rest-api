@@ -242,6 +242,29 @@
                     }
                 ]
             },
+            "publicUserInformation": {
+                "type": "object",
+                "description": "Describes a user",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "example": "valery"
+                            },
+                            "username": {
+                                "type": "string",
+                                "example": "Afterlife V"
+                            },
+                            "created": {
+                                "type": "integer",
+                                "example": 3379366800
+                            }
+                        }
+                    }
+                }
+            },
             "basePlaylist": {
                 "type": "object",
                 "description": "Describes a playlist object",
@@ -1921,6 +1944,85 @@
             }
         },
         "/api/v1/users": {
+            "get": {
+                "operationId": "listUsers",
+                "tags": [
+                    "user"
+                ],
+                "summary": "List users.",
+                "description": "List users in the server.",
+                "security": [
+                    {
+                        "cookieAuthentication": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/itemsPerPage"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    },
+                    {
+                        "name": "username",
+                        "description": "Filter to match against the usernames.",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": false,
+                        "example": "valery"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                  "allOf": [
+                                      {
+                                        "$ref": "#/components/schemas/page"
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                            "data": {
+                                                "type": "array",
+                                                "items": {
+                                                    "$ref": "#/components/schemas/publicUserInformation"
+                                                },
+                                                "example": [
+                                                    {
+                                                        "id": "valery",
+                                                        "username": "Afterlife V",
+                                                        "created": 3379366800
+                                                    },
+                                                    {
+                                                        "id": "johnny-silverhand",
+                                                        "username": "Rebel Johnny",
+                                                        "created": 595641600
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                      }
+                                  ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/invalidData"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/accessDenied"
+                    }
+                }
+            },
             "post": {
                 "operationId": "createUser",
                 "tags": [
